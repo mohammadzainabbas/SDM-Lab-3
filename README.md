@@ -13,6 +13,7 @@
 ### Table of contents
 
 - [Introduction](#introduction)
+  * [GraphDB](#graph-db)
 
 ---
 
@@ -21,3 +22,11 @@
 #### 1. Introduction
 
 __`Data drives the world.`__ 
+
+
+<a id="graph-db" />
+
+##### 1.1. GraphDB
+
+GraphDB is a graph database compliant with RDF and SPARQL specifications. It supports open APIs based on RDF4J (ex-Sesame) project and enables fast publishing of linked data on the web. The Workbench is used for searching, exploring and managing GraphDB semantic repositories.
+
