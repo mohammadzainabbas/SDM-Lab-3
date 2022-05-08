@@ -1,0 +1,4 @@
+# For local data files
+*.owl
+*.nt
+
