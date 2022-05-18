@@ -60,6 +60,41 @@ public class TBOX {
         venue.addSubClass( journal );
 
         //==================================
+        // Ontology for Decision
+        //==================================
+
+        OntClass decision = model.createClass( constants.BASE_URI.concat("Decision") );
+        OntClass acceptorrejected = model.createClass( constants.BASE_URI.concat("Accepted_Or_Rejected") );
+        OntClass reveiwtext = model.createClass( constants.BASE_URI.concat("Review_Text") );
+
+        decision.addSubClass( acceptorrejected );
+        decision.addSubClass( reveiwtext );
+
+        //==================================
+        // Ontology for Areas
+        //==================================
+
+        OntClass areas = model.createClass( constants.BASE_URI.concat("Areas") );
+        OntClass artificialintelligence = model.createClass( constants.BASE_URI.concat("Artificial_Intelligence") );
+        OntClass machinelearning = model.createClass( constants.BASE_URI.concat("Machine_Learning") );
+        OntClass naturallanguageprocessing = model.createClass( constants.BASE_URI.concat("Natural_Language_Processing") );
+
+        areas.addSubClass( artificialintelligence );
+        areas.addSubClass( machinelearning );
+        areas.addSubClass( naturallanguageprocessing );
+
+        //==================================
+        // Ontology for Publications
+        //==================================
+
+        OntClass publications = model.createClass( constants.BASE_URI.concat("Publications") );
+        OntClass conferenceproceedings = model.createClass( constants.BASE_URI.concat("Conference_Proceedings") );
+        OntClass journalvolume = model.createClass( constants.BASE_URI.concat("Journal_Volume") );
+
+        publications.addSubClass( conferenceproceedings );
+        publications.addSubClass( journalvolume );
+
+        //==================================
         // Ontology Properties
         //==================================
 
