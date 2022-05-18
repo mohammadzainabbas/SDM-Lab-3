@@ -2,6 +2,7 @@ package com.sdm.knowledge_graph.ontology;
 
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntClass;
+import org.apache.jena.ontology.OntProperty;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.ModelFactory;
 
@@ -18,7 +19,7 @@ public class TBOX {
         OntModel model = ModelFactory.createOntologyModel( OntModelSpec.RDFS_MEM_RDFS_INF );
 
         //==================================
-        // For Persons
+        // Ontology for Persons
         //==================================
         
         OntClass person = model.createClass( constants.BASE_URI.concat("Person") );
@@ -33,7 +34,7 @@ public class TBOX {
         person.addSubClass( reviewer );
         
         //==================================
-        // For Papers
+        // Ontology for Papers
         //==================================
 
         OntClass paper = model.createClass( constants.BASE_URI.concat("Paper") );
@@ -48,7 +49,7 @@ public class TBOX {
         paper.addSubClass( posterPaper ); // Only for conference papers
         
         //==================================
-        // For Venue
+        // Ontology for Venue
         //==================================
         
         OntClass venue = model.createClass( constants.BASE_URI.concat("Venue") );
@@ -59,15 +60,48 @@ public class TBOX {
         venue.addSubClass( journal );
 
         //==================================
-        // For Venue
+        // Ontology Properties
         //==================================
 
-        OntClass venue = model.createClass( constants.BASE_URI.concat("Venue") );
-        OntClass conference = model.createClass( constants.BASE_URI.concat("Conference") );
-        OntClass journal = model.createClass( constants.BASE_URI.concat("Journal") );
+        OntProperty submit = model.createOntProperty( constants.BASE_URI.concat("submit") );
+        submit.addDomain( author );
+        submit.addRange( paper );
+        submit.addLabel("Author submits paper", "en");
+
+        OntProperty submittedToVenue = model.createOntProperty( constants.BASE_URI.concat("submitted_to") );
+        submittedToVenue.addDomain( paper );
+        submittedToVenue.addRange( venue );
+        submittedToVenue.addLabel("Author submits paper to a venue", "en");
         
-        venue.addSubClass( conference );
-        venue.addSubClass( journal );
+        OntProperty handlesConferences = model.createOntProperty( constants.BASE_URI.concat("handles_conference") );
+        handlesConferences.addDomain( chair );
+        handlesConferences.addRange( conference );
+        handlesConferences.addLabel("Chair(s) handles a conference", "en");
+
+        OntProperty handlesJournals = model.createOntProperty( constants.BASE_URI.concat("handles_journal") );
+        handlesJournals.addDomain( editor );
+        handlesJournals.addRange( journal );
+        handlesJournals.addLabel("Editor(s) handles a journal", "en");
+
+        OntProperty assignedByChairs = model.createOntProperty( constants.BASE_URI.concat("assigned_by_chairs") );
+        assignedByChairs.addDomain( chair );
+        assignedByChairs.addRange( reviewer );
+        assignedByChairs.addLabel("Chairs assign reviewers", "en");
+
+        OntProperty assignedByEditors = model.createOntProperty( constants.BASE_URI.concat("assigned_by_editors") );
+        assignedByEditors.addDomain( editor );
+        assignedByEditors.addRange( reviewer );
+        assignedByEditors.addLabel("Editors assign reviewers", "en");
+
+        OntProperty assignedTo = model.createOntProperty( constants.BASE_URI.concat("assigned_to") );
+        assignedTo.addDomain( reviewer );
+        assignedTo.addRange( paper );
+        assignedTo.addLabel("Reviewers are assigned to a paper", "en");
+
+        
+
+
+
 
 
 
