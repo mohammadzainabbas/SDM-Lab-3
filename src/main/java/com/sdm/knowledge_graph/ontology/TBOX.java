@@ -78,10 +78,12 @@ public class TBOX {
         OntClass artificialintelligence = model.createClass( constants.BASE_URI.concat("Artificial_Intelligence") );
         OntClass machinelearning = model.createClass( constants.BASE_URI.concat("Machine_Learning") );
         OntClass naturallanguageprocessing = model.createClass( constants.BASE_URI.concat("Natural_Language_Processing") );
+        OntClass database = model.createClass( constants.BASE_URI.concat("Database") );
 
         areas.addSubClass( artificialintelligence );
         areas.addSubClass( machinelearning );
         areas.addSubClass( naturallanguageprocessing );
+        areas.addSubClass( database );
 
         //==================================
         // Ontology for Publications
