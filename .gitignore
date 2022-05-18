@@ -2,3 +2,5 @@
 *.owl
 *.nt
 
+# For ignoring the output
+target/*
