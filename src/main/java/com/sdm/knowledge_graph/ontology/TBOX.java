@@ -133,7 +133,46 @@ public class TBOX {
         assignedTo.addRange( paper );
         assignedTo.addLabel("Reviewers are assigned to a paper", "en");
 
-        
+        OntProperty takesDecision = model.createOntProperty( constants.BASE_URI.concat("takes_decision"));
+        assignedTo.addDomain( reviewer );
+        assignedTo.addRange( decision );
+        assignedTo.addLabel("Reviewer takes a decision","en");
+
+        OntProperty reviewIsGiven = model.createOntProperty( constants.BASE_URI.concat("review_is_given"));
+        assignedTo.addDomain( decision );
+        assignedTo.addRange( acceptorrejected );
+        assignedTo.addLabel( "Reviewer is taking a decision","en");
+
+        OntProperty hasReviweComments = model.createOntProperty( constants.BASE_URI.concat("has_review_comments"));
+        assignedTo.addDomain( decision );
+        assignedTo.addRange( reveiwtext );
+        assignedTo.addLabel( "Review comments are added","en");
+
+        OntProperty conferenceHasAreas = model.createOntProperty( constants.BASE_URI.concat("conference_has_areas"));
+        assignedTo.addDomain( conference );
+        assignedTo.addRange( areas );
+        assignedTo.addLabel( "Conference has areas","en");
+
+        OntProperty journalHasAreas = model.createOntProperty( constants.BASE_URI.concat("journal_has_areas"));
+        assignedTo.addDomain( journal );
+        assignedTo.addRange( areas );
+        assignedTo.addLabel( "Journal has areas","en");
+
+        OntProperty paperHasPublication = model.createOntProperty( constants.BASE_URI.concat("paper_has_publication"));
+        assignedTo.addDomain( paper );
+        assignedTo.addRange( publications );
+        assignedTo.addLabel( "Paper has publications","en");
+
+        OntProperty publicationHasConfProceedings = model.createOntProperty( constants.BASE_URI.concat("publication_has_conference_proceeding"));
+        assignedTo.addDomain( publications );
+        assignedTo.addRange( conferenceproceedings );
+        assignedTo.addLabel( "Publication has conference proceedings","en");
+
+        OntProperty publicationHasJourVolume = model.createOntProperty( constants.BASE_URI.concat("publication_has_journal_volume"));
+        assignedTo.addDomain( publications );
+        assignedTo.addRange( journalvolume );
+        assignedTo.addLabel( "Publication has journal volumes","en");
+
         
         model.write(System.out);
 
