@@ -99,17 +99,7 @@ public class TBOX {
         assignedTo.addLabel("Reviewers are assigned to a paper", "en");
 
         
-
-
-
-
-
-
-
-
-
-
-
+        
         model.write(System.out);
 
     }
