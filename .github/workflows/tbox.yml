@@ -1,4 +1,4 @@
-name: Exercise 1
+name: TBox Generation
 
 on:
   workflow_dispatch:
