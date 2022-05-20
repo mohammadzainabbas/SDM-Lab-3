@@ -53,6 +53,12 @@ public class TBOX {
         paper.addSubClass( posterPaper ); // Only for conference papers
         
         //==================================
+        // Ontology for Paper's Year
+        //==================================
+        
+        OntClass year = model.createClass( constants.BASE_URI.concat("Year") );
+
+        //==================================
         // Ontology for Venue
         //==================================
         
@@ -62,7 +68,21 @@ public class TBOX {
         
         venue.addSubClass( conference );
         venue.addSubClass( journal );
+        
+        //==================================
+        // Ontology for Conference Types
+        //==================================
 
+        OntClass workshop = model.createClass( constants.BASE_URI.concat("Workshop") );
+        OntClass symposium = model.createClass( constants.BASE_URI.concat("Symposium") );
+        OntClass expertGroup = model.createClass( constants.BASE_URI.concat("Expert_Group") );
+        OntClass regularConference = model.createClass( constants.BASE_URI.concat("Regular_Conference") );
+        
+        conference.addSubClass( workshop );
+        conference.addSubClass( symposium );
+        conference.addSubClass( expertGroup );
+        conference.addSubClass( regularConference );
+        
         //==================================
         // Ontology for Decision
         //==================================
@@ -179,6 +199,11 @@ public class TBOX {
         publicationHasJourVolume.addDomain( publications );
         publicationHasJourVolume.addRange( journalVolume );
         publicationHasJourVolume.addLabel( "Publication has journal volumes","en");
+
+        OntProperty paperYear = model.createOntProperty( constants.BASE_URI.concat("published_year"));
+        paperYear.addDomain( paper );
+        paperYear.addRange( year );
+        paperYear.addLabel( "Paper published in year ","en");
 
         try {
             utils.line_separator();
