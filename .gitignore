@@ -2,6 +2,8 @@
 *.owl
 *.nt
 
+!data/*.owl
+
 # For ignoring the output
 target/*
 
