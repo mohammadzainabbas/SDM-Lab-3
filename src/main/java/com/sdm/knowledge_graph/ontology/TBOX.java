@@ -1,5 +1,9 @@
 package com.sdm.knowledge_graph.ontology;
 
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntProperty;
@@ -175,7 +179,22 @@ public class TBOX {
         publicationHasJourVolume.addDomain( publications );
         publicationHasJourVolume.addRange( journalVolume );
         publicationHasJourVolume.addLabel( "Publication has journal volumes","en");
-        
-        model.write(System.out);
+
+        try {
+            utils.line_separator();
+            utils.print("Saving ontology model to '" + constants.MODEL_PATH + "'");
+            
+            FileOutputStream writerStream = new FileOutputStream( constants.MODEL_PATH );
+            model.write(writerStream, "RDF/XML");
+            writerStream.close();
+            
+            utils.print("Ontology model saved!");
+            utils.line_separator();
+        } catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
     }
 }
