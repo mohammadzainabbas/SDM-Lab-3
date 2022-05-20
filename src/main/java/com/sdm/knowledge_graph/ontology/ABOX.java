@@ -1,6 +1,11 @@
 package com.sdm.knowledge_graph.ontology;
 
 import java.io.FileOutputStream;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntClass;
@@ -11,11 +16,12 @@ import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
 
 import com.sdm.knowledge_graph.common.constants;
+import com.sdm.knowledge_graph.common.utils;
 
 public class ABOX {
    
     // public static void createPerson() throws IOException {
-    //     Model model = ModelFactory.createDefaultModel();
+    ///     Model model = ModelFactory.createDefaultModel();
 
     //     // Read the csv line by line
     //     BufferedReader csvReader = new BufferedReader(new FileReader(FILE_PATH));
@@ -69,18 +75,18 @@ public class ABOX {
 
         Model m = ModelFactory.createDefaultModel().read(constants.MODEL_PATH);
         OntModel model = ModelFactory.createOntologyModel( OntModelSpec.RDFS_MEM_RDFS_INF, m );
-
         OntClass author = model.getOntClass( constants.BASE_URI.concat("Author") );
+       //===============================
+       // Read the csv file 
+       //===============================
 
-        String name = "Mohammad_Zain_Abbas";
-        String name1 = "Muhammad_Zain_Abbas";
-        String name2 = "Muhammad_Zain";
-
-        author.createIndividual( constants.BASE_URI.concat(name) );
-        author.createIndividual( constants.BASE_URI.concat(name1) );
-
-        model.createIndividual( constants.BASE_URI.concat(name2), author );
-
-        model.write(System.out);
+        BufferedReader csvReader = new BufferedReader(new FileReader(constants.FILE_PATH));
+        CSVParser parser = CSVFormat.DEFAULT.withDelimiter(',').withHeader().parse(br);
+        for(CSVRecord record : parser) {
+            utils.print(record.get("Author"));
+            String author_name = record.get("Author");
+            author.createIndividual( constants.BASE_URI.concat(author_name) );
+            model.write(System.out);
+        }
     }
 }
