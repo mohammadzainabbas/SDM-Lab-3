@@ -77,7 +77,17 @@ public class ABOX {
         Model m = ModelFactory.createDefaultModel().read(constants.MODEL_PATH);
         OntModel model = ModelFactory.createOntologyModel( OntModelSpec.RDFS_MEM_RDFS_INF, m );
 
-        model.write(System.out);
+        OntClass author = model.getOntClass( constants.BASE_URI.concat("Author") );
 
+        String name = "Mohammad_Zain_Abbas";
+        String name1 = "Muhammad_Zain_Abbas";
+        String name2 = "Muhammad_Zain";
+
+        author.createIndividual( constants.BASE_URI.concat(name) );
+        author.createIndividual( constants.BASE_URI.concat(name1) );
+
+        model.createIndividual( constants.BASE_URI.concat(name2), author );
+
+        model.write(System.out);
     }
 }
