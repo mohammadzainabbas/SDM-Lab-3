@@ -13,14 +13,7 @@ import org.apache.jena.rdf.model.Resource;
 import com.sdm.knowledge_graph.common.constants;
 
 public class ABOX {
-    public static final String FILE_PATH = "src/main/resources/file.csv";
-    
-    public static final String OUTPUT_PATH = "src/main/resources/out/";
-
-    public static final String BASE_URL = "http://www.semanticweb.org/";
-    public static final String PROPERTY_URL = BASE_URL+"property/";
-    public static final String RESOURCE_URL = BASE_URL+"resource/";
-
+   
     // public static void createPerson() throws IOException {
     //     Model model = ModelFactory.createDefaultModel();
 
