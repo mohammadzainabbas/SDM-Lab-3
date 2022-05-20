@@ -64,10 +64,10 @@ public class TBOX {
         //==================================
 
         OntClass decision = model.createClass( constants.BASE_URI.concat("Decision") );
-        OntClass acceptorrejected = model.createClass( constants.BASE_URI.concat("Accepted_Or_Rejected") );
+        OntClass acceptOrRejected = model.createClass( constants.BASE_URI.concat("Accepted_Or_Rejected") );
         OntClass reveiwtext = model.createClass( constants.BASE_URI.concat("Review_Text") );
 
-        decision.addSubClass( acceptorrejected );
+        decision.addSubClass( acceptOrRejected );
         decision.addSubClass( reveiwtext );
 
         //==================================
@@ -75,14 +75,15 @@ public class TBOX {
         //==================================
 
         OntClass areas = model.createClass( constants.BASE_URI.concat("Areas") );
-        OntClass artificialintelligence = model.createClass( constants.BASE_URI.concat("Artificial_Intelligence") );
-        OntClass machinelearning = model.createClass( constants.BASE_URI.concat("Machine_Learning") );
-        OntClass naturallanguageprocessing = model.createClass( constants.BASE_URI.concat("Natural_Language_Processing") );
-        OntClass database = model.createClass( constants.BASE_URI.concat("Database") );
 
-        areas.addSubClass( artificialintelligence );
-        areas.addSubClass( machinelearning );
-        areas.addSubClass( naturallanguageprocessing );
+        OntClass artificialIntelligence = model.createClass( constants.BASE_URI.concat("Artificial_Intelligence") );
+        OntClass machineLearning = model.createClass( constants.BASE_URI.concat("Machine_Learning") );
+        OntClass naturalLanguageProcessing = model.createClass( constants.BASE_URI.concat("Natural_Language_Processing") );
+        OntClass database = model.createClass( constants.BASE_URI.concat("Database") );
+        
+        areas.addSubClass( artificialIntelligence );
+        areas.addSubClass( machineLearning );
+        areas.addSubClass( naturalLanguageProcessing );
         areas.addSubClass( database );
 
         //==================================
@@ -90,11 +91,11 @@ public class TBOX {
         //==================================
 
         OntClass publications = model.createClass( constants.BASE_URI.concat("Publications") );
-        OntClass conferenceproceedings = model.createClass( constants.BASE_URI.concat("Conference_Proceedings") );
-        OntClass journalvolume = model.createClass( constants.BASE_URI.concat("Journal_Volume") );
+        OntClass conferenceProceedings = model.createClass( constants.BASE_URI.concat("Conference_Proceedings") );
+        OntClass journalVolume = model.createClass( constants.BASE_URI.concat("Journal_Volume") );
 
-        publications.addSubClass( conferenceproceedings );
-        publications.addSubClass( journalvolume );
+        publications.addSubClass( conferenceProceedings );
+        publications.addSubClass( journalVolume );
 
         //==================================
         // Ontology Properties
@@ -136,47 +137,45 @@ public class TBOX {
         assignedTo.addLabel("Reviewers are assigned to a paper", "en");
 
         OntProperty takesDecision = model.createOntProperty( constants.BASE_URI.concat("takes_decision"));
-        assignedTo.addDomain( reviewer );
-        assignedTo.addRange( decision );
-        assignedTo.addLabel("Reviewer takes a decision","en");
+        takesDecision.addDomain( reviewer );
+        takesDecision.addRange( decision );
+        takesDecision.addLabel("Reviewer takes a decision","en");
 
         OntProperty reviewIsGiven = model.createOntProperty( constants.BASE_URI.concat("review_is_given"));
-        assignedTo.addDomain( decision );
-        assignedTo.addRange( acceptorrejected );
-        assignedTo.addLabel( "Reviewer is taking a decision","en");
+        reviewIsGiven.addDomain( decision );
+        reviewIsGiven.addRange( acceptOrRejected );
+        reviewIsGiven.addLabel( "Reviewer is taking a decision","en");
 
         OntProperty hasReviweComments = model.createOntProperty( constants.BASE_URI.concat("has_review_comments"));
-        assignedTo.addDomain( decision );
-        assignedTo.addRange( reveiwtext );
-        assignedTo.addLabel( "Review comments are added","en");
+        hasReviweComments.addDomain( decision );
+        hasReviweComments.addRange( reveiwtext );
+        hasReviweComments.addLabel( "Review comments are added","en");
 
         OntProperty conferenceHasAreas = model.createOntProperty( constants.BASE_URI.concat("conference_has_areas"));
-        assignedTo.addDomain( conference );
-        assignedTo.addRange( areas );
-        assignedTo.addLabel( "Conference has areas","en");
+        conferenceHasAreas.addDomain( conference );
+        conferenceHasAreas.addRange( areas );
+        conferenceHasAreas.addLabel( "Conference has areas","en");
 
         OntProperty journalHasAreas = model.createOntProperty( constants.BASE_URI.concat("journal_has_areas"));
-        assignedTo.addDomain( journal );
-        assignedTo.addRange( areas );
-        assignedTo.addLabel( "Journal has areas","en");
+        journalHasAreas.addDomain( journal );
+        journalHasAreas.addRange( areas );
+        journalHasAreas.addLabel( "Journal has areas","en");
 
         OntProperty paperHasPublication = model.createOntProperty( constants.BASE_URI.concat("paper_has_publication"));
-        assignedTo.addDomain( paper );
-        assignedTo.addRange( publications );
-        assignedTo.addLabel( "Paper has publications","en");
+        paperHasPublication.addDomain( paper );
+        paperHasPublication.addRange( publications );
+        paperHasPublication.addLabel( "Paper has publications","en");
 
         OntProperty publicationHasConfProceedings = model.createOntProperty( constants.BASE_URI.concat("publication_has_conference_proceeding"));
-        assignedTo.addDomain( publications );
-        assignedTo.addRange( conferenceproceedings );
-        assignedTo.addLabel( "Publication has conference proceedings","en");
+        publicationHasConfProceedings.addDomain( publications );
+        publicationHasConfProceedings.addRange( conferenceProceedings );
+        publicationHasConfProceedings.addLabel( "Publication has conference proceedings","en");
 
         OntProperty publicationHasJourVolume = model.createOntProperty( constants.BASE_URI.concat("publication_has_journal_volume"));
-        assignedTo.addDomain( publications );
-        assignedTo.addRange( journalvolume );
-        assignedTo.addLabel( "Publication has journal volumes","en");
-
+        publicationHasJourVolume.addDomain( publications );
+        publicationHasJourVolume.addRange( journalVolume );
+        publicationHasJourVolume.addLabel( "Publication has journal volumes","en");
         
         model.write(System.out);
-
     }
 }
