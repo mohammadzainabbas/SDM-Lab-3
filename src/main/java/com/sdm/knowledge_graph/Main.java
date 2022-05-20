@@ -1,6 +1,8 @@
 package com.sdm.knowledge_graph;
 
 import com.sdm.knowledge_graph.ontology.TBOX;
+import com.sdm.knowledge_graph.ontology.ABOX;
+
 import com.sdm.knowledge_graph.common.utils;
 
 /**
@@ -20,7 +22,10 @@ public class Main
 
         if (args[0].equals("tbox")) {
             TBOX.createAndSaveTBOX();
-        }
+        } 
+        else if (args[0].equals("abox")) {
+            ABOX.createAndSaveABOX();
+        } 
 
     }
 }

@@ -2,5 +2,10 @@
 *.owl
 *.nt
 
+!data/*.owl
+
 # For ignoring the output
 target/*
+
+# For ipynb_checkpoints
+*/.ipynb_checkpoints/*
