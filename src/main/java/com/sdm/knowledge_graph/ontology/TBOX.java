@@ -62,7 +62,21 @@ public class TBOX {
         
         venue.addSubClass( conference );
         venue.addSubClass( journal );
+        
+        //==================================
+        // Ontology for Conference Types
+        //==================================
 
+        OntClass workshop = model.createClass( constants.BASE_URI.concat("Workshop") );
+        OntClass symposium = model.createClass( constants.BASE_URI.concat("Symposium") );
+        OntClass expertGroup = model.createClass( constants.BASE_URI.concat("Expert_Group") );
+        OntClass regularConference = model.createClass( constants.BASE_URI.concat("Regular_Conference") );
+        
+        conference.addSubClass( workshop );
+        conference.addSubClass( symposium );
+        conference.addSubClass( expertGroup );
+        conference.addSubClass( regularConference );
+        
         //==================================
         // Ontology for Decision
         //==================================
