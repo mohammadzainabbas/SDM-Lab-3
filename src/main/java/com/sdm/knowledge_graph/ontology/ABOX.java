@@ -66,11 +66,11 @@ public class ABOX {
             BufferedReader csvReader = new BufferedReader(new FileReader(constants.FILE_PATH));
             CSVParser parser = CSVFormat.DEFAULT.withDelimiter(',').withHeader().parse(csvReader);
             for(CSVRecord record : parser) {
-                String author_name = record.get("Author");
+                String author_name = utils.str_clean( record.get("Author") );
                 author.createIndividual( constants.BASE_URI.concat( author_name ));
 
-                String document_type = record.get("Document_Type");
-                String handler = record.get("Handler");
+                String document_type = utils.str_clean( record.get("Document_Type") );
+                String handler = utils.str_clean( record.get("Handler") );
                 if(document_type.equals("Conference"))
                 {
                     chair.createIndividual( constants.BASE_URI.concat( handler ) );
@@ -80,18 +80,18 @@ public class ABOX {
                     editor.createIndividual( constants.BASE_URI.concat( handler ) );
                 }
 
-                String reviewer1_name = record.get("Reviewer_1");
-                String reviewer2_name = record.get("Reviewer_2");
+                String reviewer1_name = utils.str_clean( record.get("Reviewer_1") );
+                String reviewer2_name = utils.str_clean( record.get("Reviewer_2") );
                 reviewer.createIndividual( constants.BASE_URI.concat( reviewer1_name ));
                 reviewer.createIndividual( constants.BASE_URI.concat( reviewer2_name ));
 
-                String paper_name = record.get("Paper");
+                String paper_name = utils.str_clean( record.get("Paper") );
                 paper.createIndividual( constants.BASE_URI.concat( paper_name ));
 
-                String paper_year = record.get("Year"); //nullpointer error
+                String paper_year = utils.str_clean( record.get("Year") ); //nullpointer error
                 year.createIndividual( constants.BASE_URI.concat( paper_year ));
 
-                String paper_type = record.get("Paper_Type");
+                String paper_type = utils.str_clean( record.get("Paper_Type") );
                 if(paper_type.equals("Full_Paper"))
                 {
                     fullPaper.createIndividual( constants.BASE_URI.concat( paper_type ));
@@ -109,7 +109,7 @@ public class ABOX {
                     posterPaper.createIndividual( constants.BASE_URI.concat( paper_type ));
                 }
 
-                String conference_type = record.get("Conference_Type");
+                String conference_type = utils.str_clean( record.get("Conference_Type") );
                 if(conference_type.equals("Workshop"))
                 {
                     workshop.createIndividual( constants.BASE_URI.concat( conference_type));
@@ -127,7 +127,7 @@ public class ABOX {
                     regularConference.createIndividual( constants.BASE_URI.concat( conference_type));
                 }
 
-                String source_type = record.get("Source");
+                String source_type = utils.str_clean( record.get("Source") );
                 if(source_type.equals("Conference"))
                 {
                     conference.createIndividual( constants.BASE_URI.concat(source_type));
@@ -137,10 +137,10 @@ public class ABOX {
                     journal.createIndividual( constants.BASE_URI.concat(source_type));
                 }
 
-                String publications = record.get("Publication");
+                String publications = utils.str_clean( record.get("Publication") );
                 publication.createIndividual( constants.BASE_URI.concat( publications ));
                 
-                String area = record.get("Areas");
+                String area = utils.str_clean( record.get("Areas") );
                 if(area.equals("Artificial_Intelligence"))
                 {
                     artificialIntelligence.createIndividual( constants.BASE_URI.concat( area ));
@@ -158,7 +158,7 @@ public class ABOX {
                     database.createIndividual( constants.BASE_URI.concat( area ));
                 }
                 
-                String review_decision = record.get("Reviewer_Decision");
+                String review_decision = utils.str_clean( record.get("Reviewer_Decision") );
                 if(review_decision.equals("Accepted"))
                 {
                     acceptOrRejected.createIndividual( constants.BASE_URI.concat( review_decision ));
@@ -168,19 +168,19 @@ public class ABOX {
                     acceptOrRejected.createIndividual( constants.BASE_URI.concat( review_decision ));
                 }  
                 
-                String review_text = record.get("Reviewer_Text");
+                String review_text = utils.str_clean( record.get("Reviewer_Text") );
                 reveiwtext.createIndividual( constants.BASE_URI.concat( review_text ));
 
             }
 
             utils.line_separator();
             
-            // model.write(System.out);
             FileOutputStream writerStream = new FileOutputStream( constants.DATA_PATH );
+            model.write(System.out, "N-TRIPLE");
             // model.write(writerStream, "RDF/XML");
             // model.write(writerStream, "RDF/XML-ABBREV");
             // model.write(writerStream, "TURTLE");
-            model.write(writerStream, "N-TRIPLE");
+            // model.write(writerStream, "N-TRIPLE");
             writerStream.close();
 
             // model.write(new FileWriter("some-file.owl"), "TURTLE");
