@@ -118,11 +118,11 @@ public class TBOX {
         //==================================
 
         OntClass publications = model.createClass( constants.BASE_URI.concat("Publications") );
-        OntClass conferenceProceedings = model.createClass( constants.BASE_URI.concat("Conference_Proceedings") );
-        OntClass journalVolume = model.createClass( constants.BASE_URI.concat("Journal_Volume") );
+        // OntClass conferenceProceedings = model.createClass( constants.BASE_URI.concat("Conference_Proceedings") );
+        // OntClass journalVolume = model.createClass( constants.BASE_URI.concat("Journal_Volume") );
 
-        publications.addSubClass( conferenceProceedings );
-        publications.addSubClass( journalVolume );
+        // publications.addSubClass( conferenceProceedings );
+        // publications.addSubClass( journalVolume );
 
         //==================================
         // Ontology Properties
