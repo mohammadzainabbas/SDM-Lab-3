@@ -260,8 +260,8 @@ public class ABOX {
             // model.write(writerStream, "RDF/XML");
             // model.write(writerStream, "RDF/XML-ABBREV");
             // model.write(writerStream, "TURTLE");
-            // model.write(System.out, "N-TRIPLE");
-            model.write(writerStream, "N-TRIPLE");
+            model.write(System.out, "N-TRIPLE");
+            // model.write(writerStream, "N-TRIPLE");
             writerStream.close();
 
             // model.write(new FileWriter("some-file.owl"), "TURTLE");
