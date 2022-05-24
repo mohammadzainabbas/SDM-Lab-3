@@ -262,7 +262,7 @@ public class ABOX {
             // model.write(writerStream, "RDF/XML-ABBREV");
             // model.write(writerStream, "TURTLE");
             // model.write(System.out, "N-TRIPLE");
-            utils.log("Writing ABOX to file '" + constants.DATA_PATH + "'");
+            utils.log("Writing " + rowCount + " records to ABOX to file '" + constants.DATA_PATH + "'");
             model.write(writerStream, "N-TRIPLE");
             writerStream.close();
 
