@@ -13,6 +13,7 @@ import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntProperty;
 import org.apache.jena.ontology.OntModelSpec;
+import org.apache.jena.ontology.Individual;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Resource;
@@ -90,62 +91,142 @@ public class ABOX {
             OntProperty paperHasPublication = model.getOntProperty( constants.BASE_URI.concat("has_publication") );
             // OntProperty publicationHasConfProceedings = model.getOntProperty( constants.BASE_URI.concat("publication_has_conference_proceeding") );
             // OntProperty publicationHasJourVolume = model.getOntProperty( constants.BASE_URI.concat("publication_has_journal_volume") );
-            OntProperty paperYear = model.getOntProperty( constants.BASE_URI.concat("published_year") );
-                
-            utils.line_separator();
-            utils.print("Reading instances data from '" + constants.FILE_PATH + "'");
+            OntProperty paperYear = model.getOntProperty( constants.BASE_URI.concat("published_year") );                
             
             //===============================================
             // Read & Parse the csv file 
             //===============================================
-
+            
+            utils.line_separator();
+            utils.print("Parsing instances data from '" + constants.FILE_PATH + "'");
+            
             BufferedReader csvReader = new BufferedReader(new FileReader(constants.FILE_PATH));
             CSVParser parser = CSVFormat.DEFAULT.withDelimiter(',').withHeader().parse(csvReader);
+            Integer rowCount = 0;
+
             for(CSVRecord record : parser) {
+                rowCount += 1;
+                
+                //===============================================
+                // Parse each record (by column name) 
+                //===============================================
+                
                 String author_name = utils.str_clean( record.get("Author") );
-                author.createIndividual( constants.BASE_URI.concat( author_name ));
-
-                String document_type = utils.str_clean( record.get("Document_Type") );
-                String handler = utils.str_clean( record.get("Handler") );
-                if(document_type.equals("Conference"))
-                {
-                    chair.createIndividual( constants.BASE_URI.concat( handler ) );
-                }
-                else
-                {
-                    editor.createIndividual( constants.BASE_URI.concat( handler ) );
-                }
-
-                String reviewer1_name = utils.str_clean( record.get("Reviewer_1") );
-                String reviewer2_name = utils.str_clean( record.get("Reviewer_2") );
-                reviewer.createIndividual( constants.BASE_URI.concat( reviewer1_name ));
-                reviewer.createIndividual( constants.BASE_URI.concat( reviewer2_name ));
-
-                String paper_name = utils.str_clean( record.get("Paper") );
-                paper.createIndividual( constants.BASE_URI.concat( paper_name ));
-
-                String paper_year = utils.str_clean( record.get("Year") ); //nullpointer error
-                year.createIndividual( constants.BASE_URI.concat( paper_year ));
-
+                String paper_title = utils.str_clean( record.get("Paper") );
                 String paper_type = utils.str_clean( record.get("Paper_Type") );
+                String conference_type = utils.str_clean( record.get("Conference_Type") );
+                String paper_year = utils.str_clean( record.get("Year") );
+                String venue_title = utils.str_clean( record.get("Source") );
+                String publication_title = utils.str_clean( record.get("Publication") );
+                String document_type = utils.str_clean( record.get("Document_Type") );
+                String reviewer_1 = utils.str_clean( record.get("Reviewer_1") );
+                String reviewer_2 = utils.str_clean( record.get("Reviewer_2") );
+                String handler = utils.str_clean( record.get("Handler") );
+                String all_areas = utils.str_clean( record.get("Areas") );
+                String reviewer_decision = utils.str_clean( record.get("Reviewer_Decision") );
+                String reviewer_text = utils.str_clean( record.get("Reviewer_Text") );
+                
+                //===============================================
+                // Create individuals for each concept (OntClass) 
+                //===============================================
+
+                Boolean isConference = document_type.equals("Conference");
+                Boolean isAccepted = reviewer_decision.equals("Accepted");
+
+                // Add year for paper
+                year.createIndividual( constants.BASE_URI.concat( paper_year ) );
+
+                OntClass __paper;
+
+                // Add paper
                 if(paper_type.equals("Full_Paper"))
                 {
-                    fullPaper.createIndividual( constants.BASE_URI.concat( paper_type ));
+                    __paper = fullPaper;
+                    // fullPaper
+                    //     .createIndividual( constants.BASE_URI.concat( paper_title ) )
+                    //     .addProperty( submittedToVenue, constants.BASE_URI.concat( venue_title ) )
+                    //     .addProperty( paperYear, constants.BASE_URI.concat( paper_year ) );
+                    
                 }
                 else if(paper_type.equals("Short_Paper"))
                 {
-                    shortPaper.createIndividual( constants.BASE_URI.concat( paper_type ));
+                    __paper = shortPaper;
+                    // shortPaper.createIndividual( constants.BASE_URI.concat( paper_title ) );
                 }
                 else if(paper_type.equals("Demo_Paper"))
                 {
-                    demoPaper.createIndividual( constants.BASE_URI.concat( paper_type ));
+                    __paper = demoPaper;
+                    // demoPaper.createIndividual( constants.BASE_URI.concat( paper_title ) );
                 }
                 else
                 {
-                    posterPaper.createIndividual( constants.BASE_URI.concat( paper_type ));
+                    __paper = posterPaper;
+                    // posterPaper.createIndividual( constants.BASE_URI.concat( paper_title ) );
+                }
+                __paper
+                    .createIndividual( constants.BASE_URI.concat( paper_title ) )
+                    .addProperty( submittedToVenue, constants.BASE_URI.concat( venue_title ) )
+                    .addProperty( paperYear, constants.BASE_URI.concat( paper_year ) );
+
+                // Add author
+                author
+                    .createIndividual( constants.BASE_URI.concat( author_name ) )
+                    .addProperty( submit, constants.BASE_URI.concat( paper_title ) );
+                
+                // Decision (common decision)
+                acceptOrRejected.createIndividual( constants.BASE_URI.concat( reviewer_decision ) );
+                reveiwtext.createIndividual( constants.BASE_URI.concat( reviewer_text ) );
+
+                // Add decision (kinda blank node)
+                Individual __decision = decision.createIndividual( );
+                __decision
+                    .addProperty( reviewIsGiven, constants.BASE_URI.concat( reviewer_decision ) )
+                    .addProperty( hasReviweComments, constants.BASE_URI.concat( reviewer_text ) );
+                
+                // Add both reviewers (assuming that we only store the final decision by both reviewers)
+                reviewer
+                    .createIndividual( constants.BASE_URI.concat( reviewer_1 ) )
+                    .addProperty( assignedTo, constants.BASE_URI.concat( paper_title ) )
+                    .addProperty( takesDecision, __decision );
+
+                reviewer
+                    .createIndividual( constants.BASE_URI.concat( reviewer_2 ) )
+                    .addProperty( assignedTo, constants.BASE_URI.concat( paper_title ) )
+                    .addProperty( takesDecision, __decision );
+                    
+                // If paper is submitted in a conference
+                if(isConference) {
+
+                    // Add conference
+                    conference.createIndividual( constants.BASE_URI.concat( venue_title ) );
+                    
+                    // Add chairs
+                    chair
+                    .createIndividual( constants.BASE_URI.concat( handler ) )
+                    .addProperty( handlesConferences, constants.BASE_URI.concat( venue_title ) )
+                    .addProperty( assignedByChairs, constants.BASE_URI.concat( reviewer_1 ) )
+                    .addProperty( assignedByChairs, constants.BASE_URI.concat( reviewer_2 ) );
+                    
+                }
+                else {
+                // If paper is submitted in a journal
+                    
+                    // Add journal
+                    journal.createIndividual( constants.BASE_URI.concat( venue_title ) );
+
+                    // Add editors
+                    editor
+                        .createIndividual( constants.BASE_URI.concat( handler ) )
+                        .addProperty( handlesJournals, constants.BASE_URI.concat( venue_title ) )
+                        .addProperty( assignedByEditors, constants.BASE_URI.concat( reviewer_1 ) )
+                        .addProperty( assignedByEditors, constants.BASE_URI.concat( reviewer_2 ) );
+
                 }
 
-                String conference_type = utils.str_clean( record.get("Conference_Type") );
+
+
+
+
                 if(conference_type.equals("Workshop"))
                 {
                     workshop.createIndividual( constants.BASE_URI.concat( conference_type));
