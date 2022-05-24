@@ -2,7 +2,9 @@
 *.owl
 *.nt
 
+# Ignore data files (TBOX and ABOX)
 !data/*.owl
+!data/*.nt
 
 # For ignoring the output
 target/*
