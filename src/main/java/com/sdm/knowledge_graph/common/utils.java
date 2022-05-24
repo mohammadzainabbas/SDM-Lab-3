@@ -4,6 +4,16 @@ import java.lang.String;
 
 public class utils {
 
+    public static String str_clean(String str) {
+        return str
+        .replace("; ", ";")
+        .replace(".", "_")
+        .replace(" ", "_")
+        .replace("’", "")
+        .replaceAll("[^A-Za-z0-9] ","")
+        ;
+    }
+
     public static void print(Object text) { System.out.println(text); }
 
 	public static void log(String text) { print("[ log ] " + text); }
