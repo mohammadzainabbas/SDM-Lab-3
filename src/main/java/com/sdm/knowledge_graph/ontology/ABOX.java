@@ -98,7 +98,7 @@ public class ABOX {
             //===============================================
             
             utils.line_separator();
-            utils.print("Parsing instances data from '" + constants.FILE_PATH + "'");
+            utils.log("Parsing instances data from '" + constants.FILE_PATH + "'");
             
             BufferedReader csvReader = new BufferedReader(new FileReader(constants.FILE_PATH));
             CSVParser parser = CSVFormat.DEFAULT.withDelimiter(',').withHeader().parse(csvReader);
@@ -136,9 +136,8 @@ public class ABOX {
                 // Add year for paper
                 year.createIndividual( constants.BASE_URI.concat( paper_year ) );
 
-                OntClass __paper;
-
                 // Add paper
+                OntClass __paper;
                 if(paper_type.equals("Full_Paper")) {
                     __paper = fullPaper;                    
                 }
@@ -155,6 +154,12 @@ public class ABOX {
                     .createIndividual( constants.BASE_URI.concat( paper_title ) )
                     .addProperty( submittedToVenue, constants.BASE_URI.concat( venue_title ) )
                     .addProperty( paperYear, constants.BASE_URI.concat( paper_year ) );
+                
+                // If paper is accepted, then paper is published in publications (Conference Proceeding/Journal Volumes)
+                if (isAccepted) {
+                    publications.createIndividual( constants.BASE_URI.concat( publication_title ) );
+                    __paper.addProperty(paperHasPublication, constants.BASE_URI.concat( publication_title ) );
+                }
 
                 // Add author
                 author
@@ -182,11 +187,26 @@ public class ABOX {
                     .addProperty( assignedTo, constants.BASE_URI.concat( paper_title ) )
                     .addProperty( takesDecision, __decision );
                     
+                OntClass __venue;
                 // If paper is submitted in a conference
                 if(isConference) {
 
                     // Add conference
-                    conference.createIndividual( constants.BASE_URI.concat( venue_title ) );
+                    OntClass __conference;
+                    if(conference_type.equals("Workshop")) {
+                        __conference = workshop;
+                    }
+                    else if(conference_type.equals("Symposium")) {
+                        __conference = symposium;
+                    }
+                    else if(conference_type.equals("Expert_Group")) {
+                        __conference = expertGroup;
+                    }
+                    else {
+                        __conference = regularConference;
+                    }
+                    __venue = __conference;
+                    __conference.createIndividual( constants.BASE_URI.concat( venue_title ) );
                     
                     // Add chairs
                     chair
@@ -197,9 +217,10 @@ public class ABOX {
                     
                 }
                 else {
-                // If paper is submitted in a journal
+                    // If paper is submitted in a journal
                     
                     // Add journal
+                    __venue = journal;
                     journal.createIndividual( constants.BASE_URI.concat( venue_title ) );
 
                     // Add editors
@@ -211,81 +232,69 @@ public class ABOX {
 
                 }
 
+                // Add area if not added before
+                if (all_areas.contains(";")) {
+                    
+                    String[] __areas = all_areas.split(";");
+                    
+                    for(String area: __areas) {
 
+                        // If the area doesn't exist, create it
+                        if (model.getOntClass( constants.BASE_URI.concat(area) ) == null) {
+                            
+                            OntClass __area = model.createClass( constants.BASE_URI.concat( area ) );
+                            areas.addSubClass( __area );
 
+                            __venue.addProperty( hasArea, constants.BASE_URI.concat( area ) );
+                            
+                        }
 
+                    }
+                }
+                 
 
-                if(conference_type.equals("Workshop"))
-                {
-                    workshop.createIndividual( constants.BASE_URI.concat( conference_type));
-                }
-                else if(conference_type.equals("Symposium"))
-                {
-                    symposium.createIndividual( constants.BASE_URI.concat( conference_type));
-                }
-                else if(conference_type.equals("Expert_Group"))
-                {
-                    expertGroup.createIndividual( constants.BASE_URI.concat( conference_type));
-                }
-                else
-                {
-                    regularConference.createIndividual( constants.BASE_URI.concat( conference_type));
-                }
-
-                String source_type = utils.str_clean( record.get("Source") );
-                if(source_type.equals("Conference"))
-                {
-                    conference.createIndividual( constants.BASE_URI.concat(source_type));
-                }
-                else
-                {
-                    journal.createIndividual( constants.BASE_URI.concat(source_type));
-                }
-
-                String publications = utils.str_clean( record.get("Publication") );
-                publication.createIndividual( constants.BASE_URI.concat( publications ));
                 
-                String area = utils.str_clean( record.get("Areas") );
-                if(area.equals("Artificial_Intelligence"))
-                {
-                    artificialIntelligence.createIndividual( constants.BASE_URI.concat( area ));
-                }
-                else if(area.equals("Machine_Learning"))
-                {
-                    machineLearning.createIndividual( constants.BASE_URI.concat( area ));
-                }
-                else if(area.equals("Natural_Language_Processing"))
-                {
-                    naturalLanguageProcessing.createIndividual( constants.BASE_URI.concat( area ));
-                }
-                else
-                {
-                    database.createIndividual( constants.BASE_URI.concat( area ));
-                }
+                // String area = utils.str_clean( record.get("Areas") );
+                // if(area.equals("Artificial_Intelligence"))
+                // {
+                //     artificialIntelligence.createIndividual( constants.BASE_URI.concat( area ));
+                // }
+                // else if(area.equals("Machine_Learning"))
+                // {
+                //     machineLearning.createIndividual( constants.BASE_URI.concat( area ));
+                // }
+                // else if(area.equals("Natural_Language_Processing"))
+                // {
+                //     naturalLanguageProcessing.createIndividual( constants.BASE_URI.concat( area ));
+                // }
+                // else
+                // {
+                //     database.createIndividual( constants.BASE_URI.concat( area ));
+                // }
                 
-                String review_decision = utils.str_clean( record.get("Reviewer_Decision") );
-                if(review_decision.equals("Accepted"))
-                {
-                    acceptOrRejected.createIndividual( constants.BASE_URI.concat( review_decision ));
-                }  
-                else
-                {
-                    acceptOrRejected.createIndividual( constants.BASE_URI.concat( review_decision ));
-                }  
+                // String review_decision = utils.str_clean( record.get("Reviewer_Decision") );
+                // if(review_decision.equals("Accepted"))
+                // {
+                //     acceptOrRejected.createIndividual( constants.BASE_URI.concat( review_decision ));
+                // }  
+                // else
+                // {
+                //     acceptOrRejected.createIndividual( constants.BASE_URI.concat( review_decision ));
+                // }  
                 
-                String review_text = utils.str_clean( record.get("Reviewer_Text") );
-                reveiwtext.createIndividual( constants.BASE_URI.concat( review_text ));
+                // String review_text = utils.str_clean( record.get("Reviewer_Text") );
+                // reveiwtext.createIndividual( constants.BASE_URI.concat( review_text ));
 
             }
 
             utils.line_separator();
             
             FileOutputStream writerStream = new FileOutputStream( constants.DATA_PATH );
-            // model.write(System.out, "N-TRIPLE");
             // model.write(writerStream, "RDF/XML");
             // model.write(writerStream, "RDF/XML-ABBREV");
             // model.write(writerStream, "TURTLE");
-            model.write(writerStream, "N-TRIPLE");
+            // model.write(System.out, "N-TRIPLE");
+            // model.write(writerStream, "N-TRIPLE");
             writerStream.close();
 
             // model.write(new FileWriter("some-file.owl"), "TURTLE");
@@ -294,6 +303,7 @@ public class ABOX {
 
             utils.print("Done with ABOX creation!");
             utils.line_separator();
+
         } catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
