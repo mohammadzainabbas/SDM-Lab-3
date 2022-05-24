@@ -210,10 +210,10 @@ public class ABOX {
                     
                     // Add chairs
                     chair
-                    .createIndividual( constants.BASE_URI.concat( handler ) )
-                    .addProperty( handlesConferences, constants.BASE_URI.concat( venue_title ) )
-                    .addProperty( assignedByChairs, constants.BASE_URI.concat( reviewer_1 ) )
-                    .addProperty( assignedByChairs, constants.BASE_URI.concat( reviewer_2 ) );
+                        .createIndividual( constants.BASE_URI.concat( handler ) )
+                        .addProperty( handlesConferences, constants.BASE_URI.concat( venue_title ) )
+                        .addProperty( assignedByChairs, constants.BASE_URI.concat( reviewer_1 ) )
+                        .addProperty( assignedByChairs, constants.BASE_URI.concat( reviewer_2 ) );
                     
                 }
                 else {
@@ -251,39 +251,6 @@ public class ABOX {
 
                     }
                 }
-                 
-
-                
-                // String area = utils.str_clean( record.get("Areas") );
-                // if(area.equals("Artificial_Intelligence"))
-                // {
-                //     artificialIntelligence.createIndividual( constants.BASE_URI.concat( area ));
-                // }
-                // else if(area.equals("Machine_Learning"))
-                // {
-                //     machineLearning.createIndividual( constants.BASE_URI.concat( area ));
-                // }
-                // else if(area.equals("Natural_Language_Processing"))
-                // {
-                //     naturalLanguageProcessing.createIndividual( constants.BASE_URI.concat( area ));
-                // }
-                // else
-                // {
-                //     database.createIndividual( constants.BASE_URI.concat( area ));
-                // }
-                
-                // String review_decision = utils.str_clean( record.get("Reviewer_Decision") );
-                // if(review_decision.equals("Accepted"))
-                // {
-                //     acceptOrRejected.createIndividual( constants.BASE_URI.concat( review_decision ));
-                // }  
-                // else
-                // {
-                //     acceptOrRejected.createIndividual( constants.BASE_URI.concat( review_decision ));
-                // }  
-                
-                // String review_text = utils.str_clean( record.get("Reviewer_Text") );
-                // reveiwtext.createIndividual( constants.BASE_URI.concat( review_text ));
 
             }
 
@@ -294,7 +261,7 @@ public class ABOX {
             // model.write(writerStream, "RDF/XML-ABBREV");
             // model.write(writerStream, "TURTLE");
             // model.write(System.out, "N-TRIPLE");
-            // model.write(writerStream, "N-TRIPLE");
+            model.write(writerStream, "N-TRIPLE");
             writerStream.close();
 
             // model.write(new FileWriter("some-file.owl"), "TURTLE");
