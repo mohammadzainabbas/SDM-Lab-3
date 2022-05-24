@@ -21,48 +21,84 @@ import com.sdm.knowledge_graph.common.constants;
 import com.sdm.knowledge_graph.common.utils;
 
 public class ABOX {
-   
+    
     public static void createAndSaveABOX() {
-
-        Model m = ModelFactory.createDefaultModel().read(constants.MODEL_PATH);
-        OntModel model = ModelFactory.createOntologyModel( OntModelSpec.RDFS_MEM_RDFS_INF, m );
-
-        //===================================
-        // Getting the class data from TBOX
-        //===================================
         
-        OntClass author = model.getOntClass( constants.BASE_URI.concat("Author") );
-        OntClass chair = model.getOntClass( constants.BASE_URI.concat("Chair"));
-        OntClass editor = model.getOntClass( constants.BASE_URI.concat("Editor"));
-        OntClass reviewer = model.getOntClass( constants.BASE_URI.concat("Reviewer"));
-        OntClass paper = model.getOntClass( constants.BASE_URI.concat("Paper"));
-        OntClass year = model.getOntClass( constants.BASE_URI.concat("Year")); //getting error while reading int value
-        OntClass fullPaper = model.getOntClass( constants.BASE_URI.concat("Full_Paper") );
-        OntClass shortPaper = model.getOntClass( constants.BASE_URI.concat("Short_Paper") );
-        OntClass demoPaper = model.getOntClass( constants.BASE_URI.concat("Demo_Paper") );
-        OntClass posterPaper = model.getOntClass( constants.BASE_URI.concat("Poster_Paper") );
-        OntClass workshop = model.getOntClass( constants.BASE_URI.concat("Workshop") );
-        OntClass symposium = model.getOntClass( constants.BASE_URI.concat("Symposium") );
-        OntClass expertGroup = model.getOntClass( constants.BASE_URI.concat("Expert_Group") );
-        OntClass regularConference = model.getOntClass( constants.BASE_URI.concat("Regular_Conference") );
-        OntClass conference = model.getOntClass( constants.BASE_URI.concat("Conference") );
-        OntClass journal = model.getOntClass( constants.BASE_URI.concat("Journal") );
-        OntClass publication = model.getOntClass( constants.BASE_URI.concat("Publications") ); //not sure if it should be further divided into conference_proceedings & journal_volumes
-        OntClass artificialIntelligence = model.getOntClass( constants.BASE_URI.concat("Artificial_Intelligence") );
-        OntClass machineLearning = model.getOntClass( constants.BASE_URI.concat("Machine_Learning") );
-        OntClass naturalLanguageProcessing = model.getOntClass( constants.BASE_URI.concat("Natural_Language_Processing") );
-        OntClass database = model.getOntClass( constants.BASE_URI.concat("Database") );
-        OntClass acceptOrRejected = model.getOntClass( constants.BASE_URI.concat("Accepted_Or_Rejected") );
-        OntClass reveiwtext = model.getOntClass( constants.BASE_URI.concat("Review_Text") );
-
-        //===============================
-        // Read the csv file 
-        //===============================
-
         try {
+            //===============================================
+            // Reading & building Ontology model from TBOX
+            //===============================================
+
+            utils.log("Reading TBOX from '" + constants.MODEL_PATH + "'");
+            
+            Model m = ModelFactory.createDefaultModel().read(constants.MODEL_PATH);
+            OntModel model = ModelFactory.createOntologyModel( OntModelSpec.RDFS_MEM_RDFS_INF, m );
+            
+            utils.log("Ontology Model built from TBOX");
+            
+            //===============================================
+            // Getting all OntClasses (concepts) from TBOX
+            //===============================================
+
+            utils.log("Getting all Ontology Classes (concepts) from TBOX");
+            
+            OntClass person = model.getOntClass( constants.BASE_URI.concat("Person") );
+            OntClass author = model.getOntClass( constants.BASE_URI.concat("Author") );
+            OntClass chair = model.getOntClass( constants.BASE_URI.concat("Chair"));
+            OntClass editor = model.getOntClass( constants.BASE_URI.concat("Editor"));
+            OntClass reviewer = model.getOntClass( constants.BASE_URI.concat("Reviewer"));
+            OntClass paper = model.getOntClass( constants.BASE_URI.concat("Paper"));
+            OntClass fullPaper = model.getOntClass( constants.BASE_URI.concat("Full_Paper") );
+            OntClass shortPaper = model.getOntClass( constants.BASE_URI.concat("Short_Paper") );
+            OntClass demoPaper = model.getOntClass( constants.BASE_URI.concat("Demo_Paper") );
+            OntClass posterPaper = model.getOntClass( constants.BASE_URI.concat("Poster_Paper") );
+            OntClass year = model.getOntClass( constants.BASE_URI.concat("Year"));
+            OntClass venue = model.getOntClass( constants.BASE_URI.concat("Venue") );
+            OntClass conference = model.getOntClass( constants.BASE_URI.concat("Conference") );
+            OntClass journal = model.getOntClass( constants.BASE_URI.concat("Journal") );
+            OntClass workshop = model.getOntClass( constants.BASE_URI.concat("Workshop") );
+            OntClass symposium = model.getOntClass( constants.BASE_URI.concat("Symposium") );
+            OntClass expertGroup = model.getOntClass( constants.BASE_URI.concat("Expert_Group") );
+            OntClass regularConference = model.getOntClass( constants.BASE_URI.concat("Regular_Conference") );
+            OntClass decision = model.getOntClass( constants.BASE_URI.concat("Decision") );
+            OntClass acceptOrRejected = model.getOntClass( constants.BASE_URI.concat("Accepted_Or_Rejected") );
+            OntClass reveiwtext = model.getOntClass( constants.BASE_URI.concat("Review_Text") );
+            OntClass areas = model.getOntClass( constants.BASE_URI.concat("Areas") );
+            OntClass publications = model.getOntClass( constants.BASE_URI.concat("Publications") );
+            OntClass conferenceProceedings = model.getOntClass( constants.BASE_URI.concat("Conference_Proceedings") );
+            OntClass journalVolume = model.getOntClass( constants.BASE_URI.concat("Journal_Volume") );
+            
+            //===============================================
+            // Getting all Ontology Properties from TBOX
+            //===============================================
+            
+            utils.log("Getting all Ontology Properties from TBOX");
+
+            OntProperty submit = model.getOntProperty( constants.BASE_URI.concat("submit") );
+            OntProperty submittedToVenue = model.getOntProperty( constants.BASE_URI.concat("submitted_to") );
+            OntProperty handlesConferences = model.getOntProperty( constants.BASE_URI.concat("handles_conference") );
+            OntProperty handlesJournals = model.getOntProperty( constants.BASE_URI.concat("handles_journal") );
+            OntProperty assignedByChairs = model.getOntProperty( constants.BASE_URI.concat("assigned_by_chairs") );
+            OntProperty assignedByEditors = model.getOntProperty( constants.BASE_URI.concat("assigned_by_editors") );
+            OntProperty assignedTo = model.getOntProperty( constants.BASE_URI.concat("assigned_to") );
+            OntProperty takesDecision = model.getOntProperty( constants.BASE_URI.concat("takes_decision") );
+            OntProperty reviewIsGiven = model.getOntProperty( constants.BASE_URI.concat("is_paper_accepted") );
+            OntProperty hasReviweComments = model.getOntProperty( constants.BASE_URI.concat("has_review_comments") );
+            OntProperty hasArea = model.getOntProperty( constants.BASE_URI.concat("has_area") );
+            // OntProperty conferenceHasAreas = model.getOntProperty( constants.BASE_URI.concat("conference_has_areas") );
+            // OntProperty journalHasAreas = model.getOntProperty( constants.BASE_URI.concat("journal_has_areas") );
+            OntProperty paperHasPublication = model.getOntProperty( constants.BASE_URI.concat("has_publication") );
+            // OntProperty publicationHasConfProceedings = model.getOntProperty( constants.BASE_URI.concat("publication_has_conference_proceeding") );
+            // OntProperty publicationHasJourVolume = model.getOntProperty( constants.BASE_URI.concat("publication_has_journal_volume") );
+            OntProperty paperYear = model.getOntProperty( constants.BASE_URI.concat("published_year") );
+                
             utils.line_separator();
             utils.print("Reading instances data from '" + constants.FILE_PATH + "'");
             
+            //===============================================
+            // Read & Parse the csv file 
+            //===============================================
+
             BufferedReader csvReader = new BufferedReader(new FileReader(constants.FILE_PATH));
             CSVParser parser = CSVFormat.DEFAULT.withDelimiter(',').withHeader().parse(csvReader);
             for(CSVRecord record : parser) {
