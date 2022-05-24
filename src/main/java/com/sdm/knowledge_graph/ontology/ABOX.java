@@ -176,11 +176,11 @@ public class ABOX {
             utils.line_separator();
             
             FileOutputStream writerStream = new FileOutputStream( constants.DATA_PATH );
-            model.write(System.out, "N-TRIPLE");
+            // model.write(System.out, "N-TRIPLE");
             // model.write(writerStream, "RDF/XML");
             // model.write(writerStream, "RDF/XML-ABBREV");
             // model.write(writerStream, "TURTLE");
-            // model.write(writerStream, "N-TRIPLE");
+            model.write(writerStream, "N-TRIPLE");
             writerStream.close();
 
             // model.write(new FileWriter("some-file.owl"), "TURTLE");
