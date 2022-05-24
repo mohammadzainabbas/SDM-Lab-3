@@ -158,7 +158,7 @@ public class ABOX {
                     database.createIndividual( constants.BASE_URI.concat( area ));
                 }
                 
-                String review_decision = record.get("Accepted_Or_Rejected");
+                String review_decision = record.get("Reviewer_Decision");
                 if(review_decision.equals("Accepted"))
                 {
                     acceptOrRejected.createIndividual( constants.BASE_URI.concat( review_decision ));
@@ -171,8 +171,21 @@ public class ABOX {
                 String review_text = record.get("Reviewer_Text");
                 reveiwtext.createIndividual( constants.BASE_URI.concat( review_text ));
 
-                model.write(System.out);
             }
+
+            utils.line_separator();
+            
+            // model.write(System.out);
+            FileOutputStream writerStream = new FileOutputStream( constants.DATA_PATH );
+            // model.write(writerStream, "RDF/XML");
+            // model.write(writerStream, "RDF/XML-ABBREV");
+            // model.write(writerStream, "TURTLE");
+            model.write(writerStream, "N-TRIPLE");
+            writerStream.close();
+
+            // model.write(new FileWriter("some-file.owl"), "TURTLE");
+            
+            utils.line_separator();
 
             utils.print("Done with ABOX creation!");
             utils.line_separator();
