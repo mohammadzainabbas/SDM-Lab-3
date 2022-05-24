@@ -98,17 +98,20 @@ public class TBOX {
         // Ontology for Areas
         //==================================
 
+        // We will programmically create the sub-classes for areas during the creation of ABOX
+        // So, we can have all the areas that are mentioned in our publication's data
+
         OntClass areas = model.createClass( constants.BASE_URI.concat("Areas") );
 
-        OntClass artificialIntelligence = model.createClass( constants.BASE_URI.concat("Artificial_Intelligence") );
-        OntClass machineLearning = model.createClass( constants.BASE_URI.concat("Machine_Learning") );
-        OntClass naturalLanguageProcessing = model.createClass( constants.BASE_URI.concat("Natural_Language_Processing") );
-        OntClass database = model.createClass( constants.BASE_URI.concat("Database") );
+        // OntClass artificialIntelligence = model.createClass( constants.BASE_URI.concat("Artificial_Intelligence") );
+        // OntClass machineLearning = model.createClass( constants.BASE_URI.concat("Machine_Learning") );
+        // OntClass naturalLanguageProcessing = model.createClass( constants.BASE_URI.concat("Natural_Language_Processing") );
+        // OntClass database = model.createClass( constants.BASE_URI.concat("Database") );
         
-        areas.addSubClass( artificialIntelligence );
-        areas.addSubClass( machineLearning );
-        areas.addSubClass( naturalLanguageProcessing );
-        areas.addSubClass( database );
+        // areas.addSubClass( artificialIntelligence );
+        // areas.addSubClass( machineLearning );
+        // areas.addSubClass( naturalLanguageProcessing );
+        // areas.addSubClass( database );
 
         //==================================
         // Ontology for Publications
@@ -165,40 +168,45 @@ public class TBOX {
         takesDecision.addRange( decision );
         takesDecision.addLabel("Reviewer takes a decision","en");
 
-        OntProperty reviewIsGiven = model.createOntProperty( constants.BASE_URI.concat("review_is_given"));
+        OntProperty reviewIsGiven = model.createOntProperty( constants.BASE_URI.concat("is_paper_accepted"));
         reviewIsGiven.addDomain( decision );
         reviewIsGiven.addRange( acceptOrRejected );
-        reviewIsGiven.addLabel( "Reviewer is taking a decision","en");
+        reviewIsGiven.addLabel( "Paper is accepted or rejected ?","en");
 
         OntProperty hasReviweComments = model.createOntProperty( constants.BASE_URI.concat("has_review_comments"));
         hasReviweComments.addDomain( decision );
         hasReviweComments.addRange( reveiwtext );
-        hasReviweComments.addLabel( "Review comments are added","en");
+        hasReviweComments.addLabel( "Comments added by the Reviewer","en");
 
-        OntProperty conferenceHasAreas = model.createOntProperty( constants.BASE_URI.concat("conference_has_areas"));
-        conferenceHasAreas.addDomain( conference );
-        conferenceHasAreas.addRange( areas );
-        conferenceHasAreas.addLabel( "Conference has areas","en");
+        OntProperty hasArea = model.createOntProperty( constants.BASE_URI.concat("has_area"));
+        hasArea.addDomain( venue );
+        hasArea.addRange( areas );
+        hasArea.addLabel( "Venue has area","en");
 
-        OntProperty journalHasAreas = model.createOntProperty( constants.BASE_URI.concat("journal_has_areas"));
-        journalHasAreas.addDomain( journal );
-        journalHasAreas.addRange( areas );
-        journalHasAreas.addLabel( "Journal has areas","en");
+        // OntProperty conferenceHasAreas = model.createOntProperty( constants.BASE_URI.concat("conference_has_areas"));
+        // conferenceHasAreas.addDomain( conference );
+        // conferenceHasAreas.addRange( areas );
+        // conferenceHasAreas.addLabel( "Conference has areas","en");
 
-        OntProperty paperHasPublication = model.createOntProperty( constants.BASE_URI.concat("paper_has_publication"));
+        // OntProperty journalHasAreas = model.createOntProperty( constants.BASE_URI.concat("journal_has_areas"));
+        // journalHasAreas.addDomain( journal );
+        // journalHasAreas.addRange( areas );
+        // journalHasAreas.addLabel( "Journal has areas","en");
+
+        OntProperty paperHasPublication = model.createOntProperty( constants.BASE_URI.concat("has_publication"));
         paperHasPublication.addDomain( paper );
         paperHasPublication.addRange( publications );
-        paperHasPublication.addLabel( "Paper has publications","en");
+        paperHasPublication.addLabel( "Paper is published","en");
 
-        OntProperty publicationHasConfProceedings = model.createOntProperty( constants.BASE_URI.concat("publication_has_conference_proceeding"));
-        publicationHasConfProceedings.addDomain( publications );
-        publicationHasConfProceedings.addRange( conferenceProceedings );
-        publicationHasConfProceedings.addLabel( "Publication has conference proceedings","en");
+        // OntProperty publicationHasConfProceedings = model.createOntProperty( constants.BASE_URI.concat("publication_has_conference_proceeding"));
+        // publicationHasConfProceedings.addDomain( publications );
+        // publicationHasConfProceedings.addRange( conferenceProceedings );
+        // publicationHasConfProceedings.addLabel( "Publication has conference proceedings","en");
 
-        OntProperty publicationHasJourVolume = model.createOntProperty( constants.BASE_URI.concat("publication_has_journal_volume"));
-        publicationHasJourVolume.addDomain( publications );
-        publicationHasJourVolume.addRange( journalVolume );
-        publicationHasJourVolume.addLabel( "Publication has journal volumes","en");
+        // OntProperty publicationHasJourVolume = model.createOntProperty( constants.BASE_URI.concat("publication_has_journal_volume"));
+        // publicationHasJourVolume.addDomain( publications );
+        // publicationHasJourVolume.addRange( journalVolume );
+        // publicationHasJourVolume.addLabel( "Publication has journal volumes","en");
 
         OntProperty paperYear = model.createOntProperty( constants.BASE_URI.concat("published_year"));
         paperYear.addDomain( paper );
