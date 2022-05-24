@@ -139,29 +139,17 @@ public class ABOX {
                 OntClass __paper;
 
                 // Add paper
-                if(paper_type.equals("Full_Paper"))
-                {
-                    __paper = fullPaper;
-                    // fullPaper
-                    //     .createIndividual( constants.BASE_URI.concat( paper_title ) )
-                    //     .addProperty( submittedToVenue, constants.BASE_URI.concat( venue_title ) )
-                    //     .addProperty( paperYear, constants.BASE_URI.concat( paper_year ) );
-                    
+                if(paper_type.equals("Full_Paper")) {
+                    __paper = fullPaper;                    
                 }
-                else if(paper_type.equals("Short_Paper"))
-                {
+                else if(paper_type.equals("Short_Paper")) {
                     __paper = shortPaper;
-                    // shortPaper.createIndividual( constants.BASE_URI.concat( paper_title ) );
                 }
-                else if(paper_type.equals("Demo_Paper"))
-                {
+                else if(paper_type.equals("Demo_Paper")) {
                     __paper = demoPaper;
-                    // demoPaper.createIndividual( constants.BASE_URI.concat( paper_title ) );
                 }
-                else
-                {
+                else {
                     __paper = posterPaper;
-                    // posterPaper.createIndividual( constants.BASE_URI.concat( paper_title ) );
                 }
                 __paper
                     .createIndividual( constants.BASE_URI.concat( paper_title ) )
