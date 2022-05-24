@@ -6,6 +6,7 @@ public class utils {
 
     public static String str_clean(String str) {
         return str
+        .replace("; ", ";")
         .replaceAll("[^A-Za-z0-9] .","")
         .replace(" ", "_")
         ;
