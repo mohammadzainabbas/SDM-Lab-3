@@ -3,29 +3,17 @@
     xmlns:owl="http://www.w3.org/2002/07/owl#"
     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
     xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
-  <rdfs:Class rdf:about="http://www.bdma.upc/#Venue"/>
-  <rdfs:Class rdf:about="http://www.bdma.upc/#Reviewer">
-    <rdfs:subClassOf>
-      <rdfs:Class rdf:about="http://www.bdma.upc/#Person"/>
-    </rdfs:subClassOf>
-  </rdfs:Class>
-  <rdfs:Class rdf:about="http://www.bdma.upc/#Accepted_Or_Rejected">
-    <rdfs:subClassOf>
-      <rdfs:Class rdf:about="http://www.bdma.upc/#Decision"/>
-    </rdfs:subClassOf>
-  </rdfs:Class>
-  <rdfs:Class rdf:about="http://www.bdma.upc/#Paper"/>
-  <rdfs:Class rdf:about="http://www.bdma.upc/#Short_Paper">
-    <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Paper"/>
-  </rdfs:Class>
   <rdfs:Class rdf:about="http://www.bdma.upc/#Demo_Paper">
-    <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Paper"/>
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.bdma.upc/#Paper"/>
+    </rdfs:subClassOf>
   </rdfs:Class>
   <rdfs:Class rdf:about="http://www.bdma.upc/#Natural_Language_Processing">
     <rdfs:subClassOf>
       <rdfs:Class rdf:about="http://www.bdma.upc/#Areas"/>
     </rdfs:subClassOf>
   </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.bdma.upc/#Decision"/>
   <rdfs:Class rdf:about="http://www.bdma.upc/#Full_Paper">
     <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Paper"/>
   </rdfs:Class>
@@ -33,14 +21,19 @@
   <rdfs:Class rdf:about="http://www.bdma.upc/#Machine_Learning">
     <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Areas"/>
   </rdfs:Class>
-  <rdfs:Class rdf:about="http://www.bdma.upc/#Editor">
-    <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Person"/>
-  </rdfs:Class>
-  <rdfs:Class rdf:about="http://www.bdma.upc/#Conference">
-    <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Venue"/>
+  <rdfs:Class rdf:about="http://www.bdma.upc/#Person"/>
+  <rdfs:Class rdf:about="http://www.bdma.upc/#Workshop">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.bdma.upc/#Conference"/>
+    </rdfs:subClassOf>
   </rdfs:Class>
   <rdfs:Class rdf:about="http://www.bdma.upc/#Artificial_Intelligence">
     <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Areas"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.bdma.upc/#Regular_Conference">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.bdma.upc/#Conference"/>
+    </rdfs:subClassOf>
   </rdfs:Class>
   <rdfs:Class rdf:about="http://www.bdma.upc/#Journal_Volume">
     <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Publications"/>
@@ -60,11 +53,37 @@
   <rdfs:Class rdf:about="http://www.bdma.upc/#Author">
     <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Person"/>
   </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.bdma.upc/#Journal">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.bdma.upc/#Venue"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.bdma.upc/#Symposium">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="http://www.bdma.upc/#Conference"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.bdma.upc/#Reviewer">
+    <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Person"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.bdma.upc/#Accepted_Or_Rejected">
+    <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Decision"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.bdma.upc/#Short_Paper">
+    <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Paper"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.bdma.upc/#Year"/>
+  <rdfs:Class rdf:about="http://www.bdma.upc/#Editor">
+    <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Person"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="http://www.bdma.upc/#Conference">
+    <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Venue"/>
+  </rdfs:Class>
   <rdfs:Class rdf:about="http://www.bdma.upc/#Chair">
     <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Person"/>
   </rdfs:Class>
-  <rdfs:Class rdf:about="http://www.bdma.upc/#Journal">
-    <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Venue"/>
+  <rdfs:Class rdf:about="http://www.bdma.upc/#Expert_Group">
+    <rdfs:subClassOf rdf:resource="http://www.bdma.upc/#Conference"/>
   </rdfs:Class>
   <rdf:Property rdf:about="http://www.bdma.upc/#paper_has_publication">
     <rdfs:label xml:lang="en">Paper has publications</rdfs:label>
@@ -95,6 +114,11 @@
     <rdfs:label xml:lang="en">Author submits paper</rdfs:label>
     <rdfs:range rdf:resource="http://www.bdma.upc/#Paper"/>
     <rdfs:domain rdf:resource="http://www.bdma.upc/#Author"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="http://www.bdma.upc/#published_year">
+    <rdfs:label xml:lang="en">Paper published in year </rdfs:label>
+    <rdfs:range rdf:resource="http://www.bdma.upc/#Year"/>
+    <rdfs:domain rdf:resource="http://www.bdma.upc/#Paper"/>
   </rdf:Property>
   <rdf:Property rdf:about="http://www.bdma.upc/#publication_has_conference_proceeding">
     <rdfs:label xml:lang="en">Publication has conference proceedings</rdfs:label>
