@@ -215,13 +215,13 @@ public class TBOX {
 
         try {
             utils.line_separator();
-            utils.print("Saving ontology model to '" + constants.MODEL_PATH + "'");
+            utils.log("Saving ontology model to '" + constants.MODEL_PATH + "'");
             
             FileOutputStream writerStream = new FileOutputStream( constants.MODEL_PATH );
             model.write(writerStream, "RDF/XML");
             writerStream.close();
             
-            utils.print("Ontology model saved!");
+            utils.log("Ontology model saved!");
             utils.line_separator();
         } catch (FileNotFoundException e) {
 			e.printStackTrace();
