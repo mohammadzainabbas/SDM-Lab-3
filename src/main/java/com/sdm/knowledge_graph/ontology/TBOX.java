@@ -215,9 +215,9 @@ public class TBOX {
 
         try {
             utils.line_separator();
-            utils.log("Saving ontology model to '" + constants.MODEL_PATH + "'");
+            utils.log("Saving ontology model to '" + constants.TBOX_MODEL_PATH + "'");
             
-            FileOutputStream writerStream = new FileOutputStream( constants.MODEL_PATH );
+            FileOutputStream writerStream = new FileOutputStream( constants.TBOX_MODEL_PATH );
             model.write(writerStream, "RDF/XML");
             writerStream.close();
             
