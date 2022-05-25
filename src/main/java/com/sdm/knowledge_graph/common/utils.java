@@ -33,6 +33,9 @@ public class utils {
         .replace("<", "")
         .replace("μ", "")
         .replace("\"", "")
+        .replace("\\", "")
+        .replace("^", "")
+        .replace("#", "")
         .replaceAll("[\\p{Ps}\\p{Pe}]", "") // To remove all opening & closing brackets (https://stackoverflow.com/a/25853119/6390175)
         .replaceAll("[^A-Za-z0-9] ","")
         ;
