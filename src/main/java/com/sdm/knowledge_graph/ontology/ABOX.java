@@ -64,7 +64,7 @@ public class ABOX {
             OntClass regularConference = model.getOntClass( constants.BASE_URI.concat("Regular_Conference") );
             OntClass decision = model.getOntClass( constants.BASE_URI.concat("Decision") );
             OntClass acceptOrRejected = model.getOntClass( constants.BASE_URI.concat("Accepted_Or_Rejected") );
-            OntClass reveiwtext = model.getOntClass( constants.BASE_URI.concat("Review_Text") );
+            OntClass reviewText = model.getOntClass( constants.BASE_URI.concat("Review_Text") );
             OntClass areas = model.getOntClass( constants.BASE_URI.concat("Areas") );
             OntClass publications = model.getOntClass( constants.BASE_URI.concat("Publications") );
             OntClass conferenceProceedings = model.getOntClass( constants.BASE_URI.concat("Conference_Proceedings") );
@@ -85,7 +85,7 @@ public class ABOX {
             OntProperty assignedTo = model.getOntProperty( constants.BASE_URI.concat("assigned_to") );
             OntProperty takesDecision = model.getOntProperty( constants.BASE_URI.concat("takes_decision") );
             OntProperty reviewIsGiven = model.getOntProperty( constants.BASE_URI.concat("is_paper_accepted") );
-            OntProperty hasReviweComments = model.getOntProperty( constants.BASE_URI.concat("has_review_comments") );
+            OntProperty hasReviewComments = model.getOntProperty( constants.BASE_URI.concat("has_review_comments") );
             OntProperty hasArea = model.getOntProperty( constants.BASE_URI.concat("has_area") );
             OntProperty paperHasPublication = model.getOntProperty( constants.BASE_URI.concat("has_publication") );
             OntProperty paperYear = model.getOntProperty( constants.BASE_URI.concat("published_year") );                
@@ -149,39 +149,37 @@ public class ABOX {
                 }
                 
                 Individual _paper = __paper.createIndividual( constants.BASE_URI.concat( paper_title ) );
-                _paper
-                    .addProperty( submittedToVenue, constants.BASE_URI.concat( venue_title ) )
-                    .addProperty( paperYear, constants.BASE_URI.concat( paper_year ) );
+                _paper.addProperty( paperYear, _year );
                 
                 // If paper is accepted, then paper is published in publications (Conference Proceeding/Journal Volumes)
                 if (isAccepted) {
                     Individual _publications = publications.createIndividual( constants.BASE_URI.concat( publication_title ) );
-                    _paper.addProperty(paperHasPublication, constants.BASE_URI.concat( publication_title ) );
+                    _paper.addProperty( paperHasPublication, _publications );
                 }
 
                 // Add author
                 Individual _author = author.createIndividual( constants.BASE_URI.concat( author_name ) );
-                _author.addProperty( submit, constants.BASE_URI.concat( paper_title ) );
+                _author.addProperty( submit, _paper );
                 
                 // Decision (common decision)
                 Individual _acceptOrRejected = acceptOrRejected.createIndividual( constants.BASE_URI.concat( reviewer_decision ) );
-                Individual _reveiwtext = reveiwtext.createIndividual( constants.BASE_URI.concat( reviewer_text ) );
+                Individual _reviewText = reviewText.createIndividual( constants.BASE_URI.concat( reviewer_text ) );
 
                 // Add decision (kinda blank node)
                 Individual _decision = decision.createIndividual( );
                 _decision
-                    .addProperty( reviewIsGiven, constants.BASE_URI.concat( reviewer_decision ) )
-                    .addProperty( hasReviweComments, constants.BASE_URI.concat( reviewer_text ) );
+                    .addProperty( reviewIsGiven, _acceptOrRejected )
+                    .addProperty( hasReviewComments, _reviewText );
                 
                 // Add both reviewers (assuming that we only store the final decision by both reviewers)
                 Individual _reviewer_1 = reviewer.createIndividual( constants.BASE_URI.concat( reviewer_1 ) );
                 _reviewer_1
-                    .addProperty( assignedTo, constants.BASE_URI.concat( paper_title ) )
+                    .addProperty( assignedTo, _paper )
                     .addProperty( takesDecision, _decision );
 
                 Individual _reviewer_2 = reviewer.createIndividual( constants.BASE_URI.concat( reviewer_2 ) );
                 _reviewer_2
-                    .addProperty( assignedTo, constants.BASE_URI.concat( paper_title ) )
+                    .addProperty( assignedTo, _paper )
                     .addProperty( takesDecision, _decision );
 
                 Individual __venue;
@@ -208,9 +206,9 @@ public class ABOX {
                     // Add chairs
                     Individual _chair = chair.createIndividual( constants.BASE_URI.concat( handler ) );
                     _chair
-                        .addProperty( handlesConferences, constants.BASE_URI.concat( venue_title ) )
-                        .addProperty( assignedByChairs, constants.BASE_URI.concat( reviewer_1 ) )
-                        .addProperty( assignedByChairs, constants.BASE_URI.concat( reviewer_2 ) );
+                        .addProperty( handlesConferences, _conference )
+                        .addProperty( assignedByChairs, _reviewer_1 )
+                        .addProperty( assignedByChairs, _reviewer_2 );
                     
                 }
                 else {
@@ -223,11 +221,14 @@ public class ABOX {
                     // Add editors
                     Individual _editor = editor.createIndividual( constants.BASE_URI.concat( handler ) );
                     _editor
-                        .addProperty( handlesJournals, constants.BASE_URI.concat( venue_title ) )
-                        .addProperty( assignedByEditors, constants.BASE_URI.concat( reviewer_1 ) )
-                        .addProperty( assignedByEditors, constants.BASE_URI.concat( reviewer_2 ) );
+                        .addProperty( handlesJournals, _journal )
+                        .addProperty( assignedByEditors, _reviewer_1 )
+                        .addProperty( assignedByEditors, _reviewer_2 );
 
                 }
+
+                // Add property for venue & paper
+                _paper.addProperty( submittedToVenue, __venue );
 
                 // Add area if not added before
                 if (all_areas.contains(";")) {
@@ -242,7 +243,7 @@ public class ABOX {
                             OntClass __area = model.createClass( constants.BASE_URI.concat( area ) );
                             areas.addSubClass( __area );
 
-                            __venue.addProperty( hasArea, constants.BASE_URI.concat( area ) );
+                            __venue.addProperty( hasArea, __area.createIndividual() );
                             
                         }
                     }

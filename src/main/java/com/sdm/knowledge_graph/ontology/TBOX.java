@@ -89,10 +89,10 @@ public class TBOX {
 
         OntClass decision = model.createClass( constants.BASE_URI.concat("Decision") );
         OntClass acceptOrRejected = model.createClass( constants.BASE_URI.concat("Accepted_Or_Rejected") );
-        OntClass reveiwtext = model.createClass( constants.BASE_URI.concat("Review_Text") );
+        OntClass reviewText = model.createClass( constants.BASE_URI.concat("Review_Text") );
 
         decision.addSubClass( acceptOrRejected );
-        decision.addSubClass( reveiwtext );
+        decision.addSubClass( reviewText );
 
         //==================================
         // Ontology for Areas
@@ -158,10 +158,10 @@ public class TBOX {
         reviewIsGiven.addRange( acceptOrRejected );
         reviewIsGiven.addLabel( "Paper is accepted or rejected ?","en");
 
-        OntProperty hasReviweComments = model.createOntProperty( constants.BASE_URI.concat("has_review_comments"));
-        hasReviweComments.addDomain( decision );
-        hasReviweComments.addRange( reveiwtext );
-        hasReviweComments.addLabel( "Comments added by the Reviewer","en");
+        OntProperty hasReviewComments = model.createOntProperty( constants.BASE_URI.concat("has_review_comments"));
+        hasReviewComments.addDomain( decision );
+        hasReviewComments.addRange( reviewText );
+        hasReviewComments.addLabel( "Comments added by the Reviewer","en");
 
         OntProperty hasArea = model.createOntProperty( constants.BASE_URI.concat("has_area"));
         hasArea.addDomain( venue );
