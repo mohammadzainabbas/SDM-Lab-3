@@ -26,6 +26,7 @@ public class ABOX {
     public static void createAndSaveABOX() {
         
         try {
+
             //===============================================
             // Reading & building Ontology model from TBOX
             //===============================================
@@ -86,11 +87,7 @@ public class ABOX {
             OntProperty reviewIsGiven = model.getOntProperty( constants.BASE_URI.concat("is_paper_accepted") );
             OntProperty hasReviweComments = model.getOntProperty( constants.BASE_URI.concat("has_review_comments") );
             OntProperty hasArea = model.getOntProperty( constants.BASE_URI.concat("has_area") );
-            // OntProperty conferenceHasAreas = model.getOntProperty( constants.BASE_URI.concat("conference_has_areas") );
-            // OntProperty journalHasAreas = model.getOntProperty( constants.BASE_URI.concat("journal_has_areas") );
             OntProperty paperHasPublication = model.getOntProperty( constants.BASE_URI.concat("has_publication") );
-            // OntProperty publicationHasConfProceedings = model.getOntProperty( constants.BASE_URI.concat("publication_has_conference_proceeding") );
-            // OntProperty publicationHasJourVolume = model.getOntProperty( constants.BASE_URI.concat("publication_has_journal_volume") );
             OntProperty paperYear = model.getOntProperty( constants.BASE_URI.concat("published_year") );                
             
             //===============================================
@@ -248,27 +245,16 @@ public class ABOX {
                             __venue.addProperty( hasArea, constants.BASE_URI.concat( area ) );
                             
                         }
-
                     }
                 }
-
-                // utils.line_separator();
             }
 
             utils.line_separator();
+            utils.log("Writing " + rowCount + " records to ABOX to file '" + constants.ABOX_MODEL_PATH + "'");
             
             FileOutputStream writerStream = new FileOutputStream( constants.ABOX_MODEL_PATH );
-            // model.write(writerStream, "RDF/XML");
-            // model.write(writerStream, "RDF/XML-ABBREV");
-            // model.write(writerStream, "TURTLE");
-            // model.write(System.out, "N-TRIPLE");
-            utils.log("Writing " + rowCount + " records to ABOX to file '" + constants.ABOX_MODEL_PATH + "'");
             model.write(writerStream, "N-TRIPLE");
             writerStream.close();
-
-            // model.write(new FileWriter("some-file.owl"), "TURTLE");
-            
-            // utils.line_separator();
 
             utils.log("Done with ABOX creation!");
             utils.line_separator();
