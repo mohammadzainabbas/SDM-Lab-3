@@ -30,9 +30,9 @@ public class ABOX {
             // Reading & building Ontology model from TBOX
             //===============================================
 
-            utils.log("Reading TBOX from '" + constants.MODEL_PATH + "'");
+            utils.log("Reading TBOX from '" + constants.TBOX_MODEL_PATH + "'");
             
-            Model m = ModelFactory.createDefaultModel().read(constants.MODEL_PATH);
+            Model m = ModelFactory.createDefaultModel().read(constants.TBOX_MODEL_PATH);
             OntModel model = ModelFactory.createOntologyModel( OntModelSpec.RDFS_MEM_RDFS_INF, m );
             
             utils.log("Ontology Model built from TBOX");
@@ -98,9 +98,9 @@ public class ABOX {
             //===============================================
             
             utils.line_separator();
-            utils.log("Parsing instances data from '" + constants.FILE_PATH + "'");
+            utils.log("Parsing instances data from '" + constants.DATA_FILE_PATH + "'");
             
-            BufferedReader csvReader = new BufferedReader(new FileReader(constants.FILE_PATH));
+            BufferedReader csvReader = new BufferedReader(new FileReader(constants.DATA_FILE_PATH));
             CSVParser parser = CSVFormat.DEFAULT.withDelimiter(',').withHeader().parse(csvReader);
             Integer rowCount = 0;
 
@@ -257,12 +257,12 @@ public class ABOX {
 
             utils.line_separator();
             
-            FileOutputStream writerStream = new FileOutputStream( constants.DATA_PATH );
+            FileOutputStream writerStream = new FileOutputStream( constants.ABOX_MODEL_PATH );
             // model.write(writerStream, "RDF/XML");
             // model.write(writerStream, "RDF/XML-ABBREV");
             // model.write(writerStream, "TURTLE");
             // model.write(System.out, "N-TRIPLE");
-            utils.log("Writing " + rowCount + " records to ABOX to file '" + constants.DATA_PATH + "'");
+            utils.log("Writing " + rowCount + " records to ABOX to file '" + constants.ABOX_MODEL_PATH + "'");
             model.write(writerStream, "N-TRIPLE");
             writerStream.close();
 
