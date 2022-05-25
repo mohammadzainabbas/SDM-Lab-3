@@ -8,8 +8,17 @@ public class utils {
         return str
         .replace("; ", ";")
         .replace(".", "_")
+        .replace(",", "_")
+        .replace(": ", ":")
+        .replace("'s", "_s")
         .replace(" ", "_")
+        .replace("-", "_")
         .replace("’", "")
+        .replace("©", "")
+        .replace("›", "")
+        .replace("‹", "")
+        .replace("\"", "")
+        .replaceAll("[\\p{Ps}\\p{Pe}]", "") // To remove all opening & closing brackets (https://stackoverflow.com/a/25853119/6390175)
         .replaceAll("[^A-Za-z0-9] ","")
         ;
     }
