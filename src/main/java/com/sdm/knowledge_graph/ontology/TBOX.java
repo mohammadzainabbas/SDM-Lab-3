@@ -103,26 +103,11 @@ public class TBOX {
 
         OntClass areas = model.createClass( constants.BASE_URI.concat("Areas") );
 
-        // OntClass artificialIntelligence = model.createClass( constants.BASE_URI.concat("Artificial_Intelligence") );
-        // OntClass machineLearning = model.createClass( constants.BASE_URI.concat("Machine_Learning") );
-        // OntClass naturalLanguageProcessing = model.createClass( constants.BASE_URI.concat("Natural_Language_Processing") );
-        // OntClass database = model.createClass( constants.BASE_URI.concat("Database") );
-        
-        // areas.addSubClass( artificialIntelligence );
-        // areas.addSubClass( machineLearning );
-        // areas.addSubClass( naturalLanguageProcessing );
-        // areas.addSubClass( database );
-
         //==================================
         // Ontology for Publications
         //==================================
 
         OntClass publications = model.createClass( constants.BASE_URI.concat("Publications") );
-        // OntClass conferenceProceedings = model.createClass( constants.BASE_URI.concat("Conference_Proceedings") );
-        // OntClass journalVolume = model.createClass( constants.BASE_URI.concat("Journal_Volume") );
-
-        // publications.addSubClass( conferenceProceedings );
-        // publications.addSubClass( journalVolume );
 
         //==================================
         // Ontology Properties
@@ -183,30 +168,10 @@ public class TBOX {
         hasArea.addRange( areas );
         hasArea.addLabel( "Venue has area","en");
 
-        // OntProperty conferenceHasAreas = model.createOntProperty( constants.BASE_URI.concat("conference_has_areas"));
-        // conferenceHasAreas.addDomain( conference );
-        // conferenceHasAreas.addRange( areas );
-        // conferenceHasAreas.addLabel( "Conference has areas","en");
-
-        // OntProperty journalHasAreas = model.createOntProperty( constants.BASE_URI.concat("journal_has_areas"));
-        // journalHasAreas.addDomain( journal );
-        // journalHasAreas.addRange( areas );
-        // journalHasAreas.addLabel( "Journal has areas","en");
-
         OntProperty paperHasPublication = model.createOntProperty( constants.BASE_URI.concat("has_publication"));
         paperHasPublication.addDomain( paper );
         paperHasPublication.addRange( publications );
         paperHasPublication.addLabel( "Paper is published","en");
-
-        // OntProperty publicationHasConfProceedings = model.createOntProperty( constants.BASE_URI.concat("publication_has_conference_proceeding"));
-        // publicationHasConfProceedings.addDomain( publications );
-        // publicationHasConfProceedings.addRange( conferenceProceedings );
-        // publicationHasConfProceedings.addLabel( "Publication has conference proceedings","en");
-
-        // OntProperty publicationHasJourVolume = model.createOntProperty( constants.BASE_URI.concat("publication_has_journal_volume"));
-        // publicationHasJourVolume.addDomain( publications );
-        // publicationHasJourVolume.addRange( journalVolume );
-        // publicationHasJourVolume.addLabel( "Publication has journal volumes","en");
 
         OntProperty paperYear = model.createOntProperty( constants.BASE_URI.concat("published_year"));
         paperYear.addDomain( paper );
@@ -214,15 +179,17 @@ public class TBOX {
         paperYear.addLabel( "Paper published in year ","en");
 
         try {
-            utils.line_separator();
-            utils.log("Saving ontology model to '" + constants.MODEL_PATH + "'");
             
-            FileOutputStream writerStream = new FileOutputStream( constants.MODEL_PATH );
+            utils.line_separator();
+            utils.log("Saving ontology model to '" + constants.TBOX_MODEL_PATH + "'");
+            
+            FileOutputStream writerStream = new FileOutputStream( constants.TBOX_MODEL_PATH );
             model.write(writerStream, "RDF/XML");
             writerStream.close();
             
             utils.log("Ontology model saved!");
             utils.line_separator();
+
         } catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

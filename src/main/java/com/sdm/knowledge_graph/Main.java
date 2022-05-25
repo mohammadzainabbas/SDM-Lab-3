@@ -12,9 +12,9 @@ public class Main
 {
     public static void main( String[] args )
     {
-        utils.print( "Hola from the main class!" );
-        utils.print( "args: " + String.join(" ", args) );
-        utils.print( "args.length: " + args.length );
+        utils.log( "Hola from the main class!" );
+        utils.log( "args: " + String.join(" ", args) );
+        utils.log( "args.length: " + args.length );
         
         if (args.length != 1) {
             utils.error("Parameter expected: Pass 'tbox' or 'abox' for creating TBOX and ABOX respectively");
