@@ -15,6 +15,9 @@
 - [Introduction](#introduction)
   * [GraphDB](#graph-db)
   * [Apache Jena](#apache-jena)
+  * [Ontology](#ontology)
+    * [TBOX](#tbox)
+    * [ABOX](#abox)
 - [Dataset](#dataset)
 - [Preprocess](#preprocess)
 
@@ -40,7 +43,30 @@ You can find the documentation [here](https://graphdb.ontotext.com/documentation
 
 ##### 1.2. Apache Jena
 
-You can find the documentation [here](https://jena.apache.org/documentation/javadoc/jena/org/apache/jena/package-summary.html)
+Apache Jena is an open source Java framework for building Semantic Web and Linked Data applications. It is quite powerful as it can be used to create ontologies, query and add constraints (via SHACL) in semantic web world.
+
+For the purpose of this lab, we have used Apache Jena API to create TBOX and ABOX (and their links) for our publications' data. 
+
+You can find the documentation for Apache Jena API [here](https://jena.apache.org/documentation/javadoc/jena/org/apache/jena/package-summary.html)
+
+
+<a id="ontology" />
+
+##### 1.3. Ontology
+
+We have mentioned `TBOX` and `ABOX` but what are they ?
+
+<a id="tbox" />
+
+###### 1.3.1 TBOX
+
+`TBOX` can be think as the meta-data for our knowledge graph (or semantic web data/linked data). It tells you what are the atomic concepts (Classes) are there and how they are linked to each other (Properties)
+
+<a id="abox" />
+
+###### 1.3.2 ABOX
+
+`ABOX` is the data instance layer. You create instance via triplets (`subject` `predicate` `object`) format. You basically tells which instance of data belongs to which atomic concept. And how it is linked to another instance of data.
 
 ---
 
