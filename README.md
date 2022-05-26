@@ -68,6 +68,9 @@ We have mentioned `TBOX` and `ABOX` but what are they ?
 
 `ABOX` is the data instance layer. You create instance via triplets (`subject` `predicate` `object`) format. You basically tells which instance of data belongs to which atomic concept. And how it is linked to another instance of data.
 
+
+So, when you have your _TBOX_ and _ABOX_ on top of _Knowledge graph_, you basically have `Ontology`. And you can unlock many amazing possibilities to query the data etc.
+
 ---
 
 <a id="dataset" />
