@@ -15,6 +15,8 @@
 - [Introduction](#introduction)
   * [GraphDB](#graph-db)
   * [Apache Jena](#apache-jena)
+- [Dataset](#dataset)
+- [Preprocess](#preprocess)
 
 ---
 
@@ -39,4 +41,28 @@ You can find the documentation [here](https://graphdb.ontotext.com/documentation
 ##### 1.2. Apache Jena
 
 You can find the documentation [here](https://jena.apache.org/documentation/javadoc/jena/org/apache/jena/package-summary.html)
+
+---
+
+<a id="dataset" />
+
+#### 2. Dataset
+
+We used `BYU Engineering Publications in Scopus 2017-21` publications' dataset available on Kaggle. You can find it [here](https://www.kaggle.com/datasets/dpixton/byu-engineering-publications-in-scopus-201721)
+
+> Note: We renamed the file to `publications.csv` for ease of use.
+
+---
+
+<a id="preprocess" />
+
+#### 3. Preprocess
+
+In order to create correct topology (TBOX and ABOX), you may need to pre-process your data first. We wrote a python script which you can use to get the preprocessed data. Just run the following to get the `instances_data.csv` file.
+
+```bash
+git clone https://github.com/mohammadzainabbas/SDM-Lab-3.git
+cd SDM-Lab-3/
+python scripts/preprocess_publication_data.py
+```
 
