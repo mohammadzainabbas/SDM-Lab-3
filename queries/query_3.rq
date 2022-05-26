@@ -5,11 +5,11 @@ PREFIX sdm: <http://www.bdma.upc/#>
 
 SELECT DISTINCT ?properties WHERE {
     {
-	    ?properties rdfs:range sdm:Venue
+	    ?properties rdfs:domain sdm:Venue
     }
     UNION
     {
         ?child_class rdfs:subClassOf* sdm:Venue . # all the child classes of venue
-        ?properties rdfs:range ?child_class # range of all those child classes
+        ?properties rdfs:domain ?child_class # domain of all those child classes
     }
 }
