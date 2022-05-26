@@ -9,7 +9,7 @@ WHERE {
 
    ?author        sdm:submit           ?paper .
 
-   ?paper 	      sdm:submitted_to     ?venue ;
+   ?paper         sdm:submitted_to     ?venue ;
                   sdm:has_publication  ?publication . #only the accepted papers are published
    
    ?venue         rdf:type             ?venue_type ;
