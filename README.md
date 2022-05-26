@@ -20,6 +20,8 @@
     * [ABOX](#abox)
 - [Dataset](#dataset)
 - [Preprocess](#preprocess)
+- [Generate TBOX](#generate-tbox)
+- [Generate ABOX](#generate-abox)
 
 ---
 
@@ -43,7 +45,7 @@ You can find the documentation [here](https://graphdb.ontotext.com/documentation
 
 ##### 1.2. Apache Jena
 
-Apache Jena is an open source Java framework for building Semantic Web and Linked Data applications. It is quite powerful as it can be used to create ontologies, query and add constraints (via SHACL) in semantic web world.
+[Apache Jena](https://jena.apache.org/) is an open source Java framework for building Semantic Web and Linked Data applications. It is quite powerful as it can be used to create ontologies, query and add constraints (via SHACL) in semantic web world.
 
 For the purpose of this lab, we have used Apache Jena API to create TBOX and ABOX (and their links) for our publications' data. 
 
@@ -95,3 +97,28 @@ cd SDM-Lab-3/
 python scripts/preprocess_publication_data.py
 ```
 
+---
+
+<a id="generate-tbox" />
+
+#### 4. Generate TBOX
+
+Run the following command to generate and save the TBOX:
+
+```bash
+sh scripts/build_n_run.sh tbox
+```
+
+---
+
+<a id="generate-abox" />
+
+#### 5. Generate ABOX
+
+Run the following command to generate and save the ABOX:
+
+```bash
+sh scripts/build_n_run.sh abox
+```
+
+After running the above mentioned commands, you should have some
