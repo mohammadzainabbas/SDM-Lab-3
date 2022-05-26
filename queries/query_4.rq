@@ -1,4 +1,4 @@
-# Find all the papers written by a given author that where published in database conferences
+# Find all the papers written by a given author that where published in database conferences.
 
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX sdm: <http://www.bdma.upc/#>
