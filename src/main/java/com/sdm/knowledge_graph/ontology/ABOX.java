@@ -67,8 +67,6 @@ public class ABOX {
             OntClass reviewText = model.getOntClass( constants.BASE_URI.concat("Review_Text") );
             OntClass areas = model.getOntClass( constants.BASE_URI.concat("Areas") );
             OntClass publications = model.getOntClass( constants.BASE_URI.concat("Publications") );
-            OntClass conferenceProceedings = model.getOntClass( constants.BASE_URI.concat("Conference_Proceedings") );
-            OntClass journalVolume = model.getOntClass( constants.BASE_URI.concat("Journal_Volume") );
             
             //===============================================
             // Getting all Ontology Properties from TBOX
