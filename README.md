@@ -15,8 +15,13 @@
 - [Introduction](#introduction)
   * [GraphDB](#graph-db)
   * [Apache Jena](#apache-jena)
+  * [Ontology](#ontology)
+    * [TBOX](#tbox)
+    * [ABOX](#abox)
 - [Dataset](#dataset)
 - [Preprocess](#preprocess)
+- [Generate TBOX](#generate-tbox)
+- [Generate ABOX](#generate-abox)
 
 ---
 
@@ -40,7 +45,33 @@ You can find the documentation [here](https://graphdb.ontotext.com/documentation
 
 ##### 1.2. Apache Jena
 
-You can find the documentation [here](https://jena.apache.org/documentation/javadoc/jena/org/apache/jena/package-summary.html)
+[Apache Jena](https://jena.apache.org/) is an open source Java framework for building Semantic Web and Linked Data applications. It is quite powerful as it can be used to create ontologies, query and add constraints (via SHACL) in semantic web world.
+
+For the purpose of this lab, we have used Apache Jena API to create TBOX and ABOX (and their links) for our publications' data. 
+
+You can find the documentation for Apache Jena API [here](https://jena.apache.org/documentation/javadoc/jena/org/apache/jena/package-summary.html)
+
+
+<a id="ontology" />
+
+##### 1.3. Ontology
+
+We have mentioned `TBOX` and `ABOX` but what are they ?
+
+<a id="tbox" />
+
+###### 1.3.1 TBOX
+
+`TBOX` can be think as the meta-data for our knowledge graph (or semantic web data/linked data). It tells you what are the atomic concepts (Classes) are there and how they are linked to each other (Properties)
+
+<a id="abox" />
+
+###### 1.3.2 ABOX
+
+`ABOX` is the data instance layer. You create instance via triplets (`subject` `predicate` `object`) format. You basically tells which instance of data belongs to which atomic concept. And how it is linked to another instance of data.
+
+
+So, when you have your _TBOX_ and _ABOX_ on top of _Knowledge graph_, you basically have `Ontology`. And you can unlock many amazing possibilities to query the data etc.
 
 ---
 
@@ -66,3 +97,41 @@ cd SDM-Lab-3/
 python scripts/preprocess_publication_data.py
 ```
 
+---
+
+<a id="generate-tbox" />
+
+#### 4. Generate TBOX
+
+Run the following command to generate and save the TBOX:
+
+```bash
+sh scripts/build_n_run.sh tbox
+```
+
+---
+
+<a id="generate-abox" />
+
+#### 5. Generate ABOX
+
+Run the following command to generate and save the ABOX:
+
+```bash
+sh scripts/build_n_run.sh abox
+```
+
+---
+
+After running the above mentioned commands, you should have these files under `data` directory:
+
+```
+data
+├── publications.owl
+├── publications_data.nt
+└── raw
+    ├── instances_data.csv
+    └── publications.csv
+```
+
+Now, you can load `publications.owl` and `publications_data.nt` in GraphDB and start querying the data.
