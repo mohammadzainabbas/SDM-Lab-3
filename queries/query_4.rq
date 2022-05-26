@@ -1,29 +1,24 @@
 # Find all the papers written by a given author that where published in database conferences
 
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX sdm: <http://www.bdma.upc/#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX sdm: <http://www.bdma.upc/#>
 
 SELECT ?author (group_concat(distinct ?paper;separator="\n\n_____\n\n") as ?papers) ?area
-#SELECT ?author ?paper ?venue ?area
 WHERE {
-    ?author sdm:submit 			?paper .
-    ?paper 	sdm:submitted_to 	?venue ;
-			sdm:has_publication ?publication . #only the accepted papers are published
-    
-    ?venue rdf:type ?venue_type ;
-           sdm:has_area ?blank_ .
-    
-    ?venue_type rdfs:subClassOf sdm:Conference .
-    
-    ?blank_ a ?area .
-#    ?blank_ a sdm:Clothes .
-#    ?area rdfs:subClassOf sdm:Areas .
-    filter( contains( lcase(str(?area)) , "database"@en ) )
-    
-#    ?venue 	rdfs:subClassOf 	sdm:Conference .
-#			sdm:has_area 		?area .
+
+   ?author        sdm:submit           ?paper .
+
+   ?paper 	      sdm:submitted_to     ?venue ;
+                  sdm:has_publication  ?publication . #only the accepted papers are published
+   
+   ?venue         rdf:type             ?venue_type ;
+                  sdm:has_area         ?blank_ .
+   
+   ?venue_type    rdfs:subClassOf      sdm:Conference .
+   
+   ?blank_        rdf:type             ?area .
+
+   filter( contains( lcase(str(?area)) , "database"@en ) )
 }
 GROUP BY ?author ?area
