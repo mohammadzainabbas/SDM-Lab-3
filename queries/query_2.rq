@@ -7,7 +7,7 @@ SELECT DISTINCT ?properties WHERE {
     {
 	    ?properties rdfs:domain sdm:Author        
     }
-    union
+    UNION
     {
         sdm:Author rdfs:subClassOf* ?super_class . # all the superclasses of author
         ?properties rdfs:domain ?super_class # domain of all those superclasses
