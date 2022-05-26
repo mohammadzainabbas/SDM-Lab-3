@@ -121,4 +121,17 @@ Run the following command to generate and save the ABOX:
 sh scripts/build_n_run.sh abox
 ```
 
-After running the above mentioned commands, you should have some
+---
+
+After running the above mentioned commands, you should have these files under `data` directory:
+
+```
+data
+├── publications.owl
+├── publications_data.nt
+└── raw
+    ├── instances_data.csv
+    └── publications.csv
+```
+
+Now, you can load `publications.owl` and `publications_data.nt` in GraphDB and start querying the data.
