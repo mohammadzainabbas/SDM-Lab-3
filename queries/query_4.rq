@@ -6,8 +6,8 @@ PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 
-#SELECT ?author (group_concat(?paper;separator="\n_____\n") as ?papers)
-SELECT ?author ?paper ?venue ?area
+SELECT ?author (group_concat(?paper;separator="\n_____\n") as ?papers) ?area
+#SELECT ?author ?paper ?venue ?area
 WHERE {
     ?author sdm:submit 			?paper .
     ?paper 	sdm:submitted_to 	?venue ;
@@ -25,5 +25,5 @@ WHERE {
     
 #    ?venue 	rdfs:subClassOf 	sdm:Conference .
 #			sdm:has_area 		?area .
-} limit 100
-#GROUP BY ?author
+}
+GROUP BY ?author ?area
